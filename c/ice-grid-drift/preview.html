@@ -1,0 +1,176 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><style>*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden}body{display:grid;place-items:center;background:linear-gradient(135deg,#f3ecff 0%,#fdf4fa 55%,#eef6ff 100%);font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;font-feature-settings:'cv11','ss01'}button,input{font-family:inherit}*{-webkit-tap-highlight-color:transparent}button{-webkit-user-select:none;user-select:none}</style><style>:root {
+  --bg: #f5f9ff;
+  --fg: #0f172a;
+  --muted: #64748b;
+  --accent: #2563eb;
+  --tint-1: #dbeafe;
+  --tint-2: #bfdbfe;
+  --dot-base: #c7d6ec;
+  --radius: 12px;
+  --shadow: 0 1px 2px rgba(15, 23, 42, .06), 0 8px 24px -8px rgba(37, 99, 235, .25);
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  --spring: cubic-bezier(.34, 1.56, .64, 1);
+}
+
+.field {
+  position: relative;
+  width: 520px;
+  height: 320px;
+  border-radius: var(--radius);
+  background:
+    radial-gradient(120% 100% at 50% 0%, #ffffff 0%, var(--bg) 60%, #eef4fc 100%);
+  box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, .9);
+  overflow: hidden;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.dots {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(22, 1fr);
+  grid-template-rows: repeat(14, 1fr);
+}
+
+.dots i {
+  display: grid;
+  place-items: center;
+}
+
+.dots i::before {
+  content: "";
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: color-mix(in srgb, var(--accent) calc(var(--f, 0) * 100%), var(--dot-base));
+  transform: translate(var(--tx, 0px), var(--ty, 0px)) scale(var(--s, 1));
+  transition: transform .12s linear, background-color .2s var(--ease);
+}
+
+.field.idle .dots i::before {
+  transition: transform .7s var(--spring), background-color .5s var(--ease);
+}
+
+.cta {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: -22px 0 0 -62px;
+  width: 124px;
+  height: 44px;
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #fff;
+  background: linear-gradient(180deg, #3b82f6, var(--accent));
+  font: 600 15px/1 Inter, system-ui, sans-serif;
+  letter-spacing: -.01em;
+  font-variant-numeric: tabular-nums;
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, .08),
+    0 8px 24px -8px rgba(37, 99, 235, .45),
+    inset 0 1px 0 rgba(255, 255, 255, .35);
+  transform: translate(var(--mx, 0px), var(--my, 0px));
+  transition: transform .5s var(--spring), box-shadow .3s var(--ease);
+}
+
+.cta:hover {
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, .08),
+    0 12px 28px -8px rgba(37, 99, 235, .55),
+    inset 0 1px 0 rgba(255, 255, 255, .45);
+}
+
+.cta:active {
+  transform: translate(var(--mx, 0px), var(--my, 0px)) scale(.97);
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, .1),
+    0 4px 12px -6px rgba(37, 99, 235, .5),
+    inset 0 1px 0 rgba(255, 255, 255, .3);
+}
+
+.cta:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 3px var(--tint-2),
+    0 1px 2px rgba(15, 23, 42, .08),
+    0 8px 24px -8px rgba(37, 99, 235, .45);
+}
+
+.cta span {
+  display: block;
+  transform: translate(calc(var(--mx, 0px) * .35), calc(var(--my, 0px) * .35));
+  transition: transform .5s var(--spring);
+}
+
+.cta.pull {
+  transition: transform .12s linear;
+}
+</style></head><body><div id="__z" style="width:100%;height:100%;display:grid;place-items:center;transform-origin:50% 50%"><div class="field" id="field">
+  <div class="dots" id="dots"></div>
+  <button class="cta" id="cta" type="button">
+    <span>Explore</span>
+  </button>
+</div>
+</div><div id="__cur" style="position:fixed;left:0;top:0;width:34px;height:34px;pointer-events:none;z-index:2147483647;opacity:0;transform:translate(-100px,-100px);transition:opacity .25s"><svg viewBox="0 0 24 24" width="34" height="34" style="filter:drop-shadow(0 3px 5px rgba(0,0,0,.45))"><path d="M4 2.5v17.2l4.6-4.1 3.1 6.6 3-1.4-3.1-6.5 6.3-.3z" fill="#fff" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+<style>#__rip{position:fixed;width:12px;height:12px;border-radius:50%;border:3px solid rgba(124,92,255,.9);pointer-events:none;z-index:2147483646;transform:translate(-50%,-50%) scale(.2);opacity:0}#__rip.go{animation:__rip .55s ease-out}@keyframes __rip{0%{opacity:.9;transform:translate(-50%,-50%) scale(.3)}100%{opacity:0;transform:translate(-50%,-50%) scale(4.2)}}</style><div id="__rip"></div>
+<script>(function(){var c=document.getElementById('__cur'),r=document.getElementById('__rip');addEventListener('mousemove',function(e){c.style.opacity=1;c.style.transform='translate('+e.clientX+'px,'+e.clientY+'px)'},true);addEventListener('mousedown',function(e){c.firstElementChild.style.transform='scale(.82)';r.style.left=e.clientX+'px';r.style.top=e.clientY+'px';r.classList.remove('go');void r.offsetWidth;r.classList.add('go')},true);addEventListener('mouseup',function(){c.firstElementChild.style.transform='scale(1)'},true)})();</script><script>const field = document.getElementById('field');
+const dotsEl = document.getElementById('dots');
+const cta = document.getElementById('cta');
+for (let i = 0; i < 308; i++) dotsEl.appendChild(document
+  .createElement('i'));
+const dots = [...dotsEl.children];
+let centers = [];
+const R = 120;
+
+const measure = () => {
+  centers = dots.map((d) => {
+    const r = d.getBoundingClientRect();
+    return [r.left + r.width / 2, r.top + r.height /
+      2
+    ];
+  });
+};
+measure();
+field.classList.add('idle');
+
+field.addEventListener('mousemove', (e) => {
+  field.classList.remove('idle');
+  dots.forEach((d, i) => {
+    const dx = centers[i][0] - e.clientX;
+    const dy = centers[i][1] - e.clientY;
+    const dist = Math.hypot(dx, dy);
+    const f = Math.max(0, 1 - dist / R);
+    const push = f * f * 24;
+    d.style.setProperty('--tx', (dx / (dist ||
+      1)) * push + 'px');
+    d.style.setProperty('--ty', (dy / (dist ||
+      1)) * push + 'px');
+    d.style.setProperty('--s', 1 + f * 2.2);
+    d.style.setProperty('--f', f);
+  });
+  const r = cta.getBoundingClientRect();
+  const cx = r.left + r.width / 2;
+  const cy = r.top + r.height / 2;
+  const d = Math.hypot(e.clientX - cx, e.clientY -
+  cy);
+  cta.classList.toggle('pull', d < 110);
+  const k = d < 110 ? 0.24 : 0;
+  cta.style.setProperty('--mx', (e.clientX - cx) * k +
+    'px');
+  cta.style.setProperty('--my', (e.clientY - cy) * k +
+    'px');
+});
+
+field.addEventListener('mouseleave', () => {
+  field.classList.add('idle');
+  dots.forEach((d) => {
+    ['--tx', '--ty', '--f'].forEach((p) => d.style
+      .setProperty(p, '0'));
+    d.style.setProperty('--s', 1);
+  });
+  cta.classList.remove('pull');
+  cta.style.setProperty('--mx', '0px');
+  cta.style.setProperty('--my', '0px');
+});
+</script><script>addEventListener('load',function(){setTimeout(function(){var z=document.getElementById('__z'),l=1e9,t=1e9,r=0,b=0;[].forEach.call(z.children,function(e){var x=e.getBoundingClientRect();if(!x.width)return;l=Math.min(l,x.left);t=Math.min(t,x.top);r=Math.max(r,x.right);b=Math.max(b,x.bottom)});var w=r-l,h=b-t;if(w>0&&h>0){var k=Math.max(1,Math.min(1.5,590/w,330/h));z.style.transform='scale('+k.toFixed(3)+')'}},60)})</script></body></html>

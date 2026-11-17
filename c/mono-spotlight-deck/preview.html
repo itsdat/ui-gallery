@@ -1,0 +1,198 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><style>*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden}body{display:grid;place-items:center;background:linear-gradient(135deg,#f3ecff 0%,#fdf4fa 55%,#eef6ff 100%);font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;font-feature-settings:'cv11','ss01'}button,input{font-family:inherit}*{-webkit-tap-highlight-color:transparent}button{-webkit-user-select:none;user-select:none}</style><style>:root {
+  --bg: #fafafa;
+  --card: #ffffff;
+  --line: #e5e5e5;
+  --line-strong: #d4d4d4;
+  --fg: #0a0a0a;
+  --muted: #737373;
+  --accent: #0a0a0a;
+  --radius: 12px;
+  --shadow: 0 1px 2px rgba(10, 10, 10, .04), 0 12px 28px -18px rgba(10, 10, 10, .18);
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  --spring: cubic-bezier(.34, 1.56, .64, 1);
+}
+
+.wrap {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 24px;
+  background: var(--bg);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 172px);
+  gap: 12px;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.card {
+  position: relative;
+  height: 208px;
+  padding: 18px 16px 14px;
+  border-radius: var(--radius);
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  color: var(--fg);
+  background: var(--card);
+  box-shadow: inset 0 0 0 1px var(--line), var(--shadow);
+  transition: transform .45s var(--ease), box-shadow .45s var(--ease);
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: inset 0 0 0 1px var(--line-strong), 0 2px 4px rgba(10, 10, 10, .05), 0 20px 40px -20px rgba(10, 10, 10, .28);
+}
+
+.card:active {
+  transform: translateY(-1px) scale(.985);
+  transition-duration: .18s;
+}
+
+.card::before,
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity .3s var(--ease);
+  pointer-events: none;
+}
+
+.card::before {
+  z-index: -1;
+  background: radial-gradient(220px circle at var(--x, 50%) var(--y, 50%), rgba(10, 10, 10, .055), transparent 65%);
+}
+
+.card::after {
+  padding: 1px;
+  background: radial-gradient(140px circle at var(--x, 50%) var(--y, 50%), rgba(10, 10, 10, .55), transparent 70%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.grid:hover .card::before,
+.grid:hover .card::after {
+  opacity: 1;
+}
+
+.ico {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  color: var(--fg);
+  background: #f5f5f5;
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.ico svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+h3 {
+  margin: 16px 0 6px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -.01em;
+}
+
+p {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+footer {
+  margin-top: auto;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+footer b {
+  font-size: 14px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.01em;
+}
+
+footer span {
+  font-size: 11.5px;
+  color: var(--muted);
+}
+</style></head><body><div id="__z" style="width:100%;height:100%;display:grid;place-items:center;transform-origin:50% 50%"><div class="wrap">
+  <div class="grid" id="grid">
+    <article class="card">
+      <div class="ico">
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="8.5"/>
+          <circle cx="12" cy="12" r="2"/>
+        </svg>
+      </div>
+      <h3>Side A — Midnight</h3>
+      <p>180g pressing, half-speed mastered at 45 rpm.</p>
+      <footer>
+        <b>33:12</b>
+        <span>runtime</span>
+      </footer>
+    </article>
+    <article class="card">
+      <div class="ico">
+        <svg viewBox="0 0 24 24">
+          <path d="M4 19V5M4 19h16"/>
+          <path d="M8 15l3.5-4 3 2.5L19 7"/>
+        </svg>
+      </div>
+      <h3>Side B — Amber</h3>
+      <p>Gatefold sleeve with foil-stamped liner notes.</p>
+      <footer>
+        <b>240</b>
+        <span>copies</span>
+      </footer>
+    </article>
+    <article class="card">
+      <div class="ico">
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="8.5"/>
+          <path d="M3.5 12h17M12 3.5c2.6 2.4 3.9 5.2 3.9 8.5s-1.3 6.1-3.9 8.5c-2.6-2.4-3.9-5.2-3.9-8.5S9.4 5.9 12 3.5z"/>
+        </svg>
+      </div>
+      <h3>After Hours</h3>
+      <p>Members-only reissue, shipped in a matte slipcase.</p>
+      <footer>
+        <b>No. 07</b>
+        <span>series</span>
+      </footer>
+    </article>
+  </div>
+</div>
+</div><div id="__cur" style="position:fixed;left:0;top:0;width:34px;height:34px;pointer-events:none;z-index:2147483647;opacity:0;transform:translate(-100px,-100px);transition:opacity .25s"><svg viewBox="0 0 24 24" width="34" height="34" style="filter:drop-shadow(0 3px 5px rgba(0,0,0,.45))"><path d="M4 2.5v17.2l4.6-4.1 3.1 6.6 3-1.4-3.1-6.5 6.3-.3z" fill="#fff" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+<style>#__rip{position:fixed;width:12px;height:12px;border-radius:50%;border:3px solid rgba(124,92,255,.9);pointer-events:none;z-index:2147483646;transform:translate(-50%,-50%) scale(.2);opacity:0}#__rip.go{animation:__rip .55s ease-out}@keyframes __rip{0%{opacity:.9;transform:translate(-50%,-50%) scale(.3)}100%{opacity:0;transform:translate(-50%,-50%) scale(4.2)}}</style><div id="__rip"></div>
+<script>(function(){var c=document.getElementById('__cur'),r=document.getElementById('__rip');addEventListener('mousemove',function(e){c.style.opacity=1;c.style.transform='translate('+e.clientX+'px,'+e.clientY+'px)'},true);addEventListener('mousedown',function(e){c.firstElementChild.style.transform='scale(.82)';r.style.left=e.clientX+'px';r.style.top=e.clientY+'px';r.classList.remove('go');void r.offsetWidth;r.classList.add('go')},true);addEventListener('mouseup',function(){c.firstElementChild.style.transform='scale(1)'},true)})();</script><script>const grid = document.getElementById('grid');
+const cards = [...grid.querySelectorAll('.card')];
+
+grid.addEventListener('mousemove', (e) => {
+  cards.forEach((c) => {
+    const r = c.getBoundingClientRect();
+    c.style.setProperty('--x', e.clientX - r
+      .left + 'px');
+    c.style.setProperty('--y', e.clientY - r.top +
+      'px');
+  });
+});
+</script><script>addEventListener('load',function(){setTimeout(function(){var z=document.getElementById('__z'),l=1e9,t=1e9,r=0,b=0;[].forEach.call(z.children,function(e){var x=e.getBoundingClientRect();if(!x.width)return;l=Math.min(l,x.left);t=Math.min(t,x.top);r=Math.max(r,x.right);b=Math.max(b,x.bottom)});var w=r-l,h=b-t;if(w>0&&h>0){var k=Math.max(1,Math.min(1.5,590/w,330/h));z.style.transform='scale('+k.toFixed(3)+')'}},60)})</script></body></html>

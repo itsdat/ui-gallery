@@ -1,0 +1,319 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Frost Dock — UI Components</title>
+<meta property="og:image" content="thumb.jpg"><style>:root{--bg:#0f0e13;--c:#19181e;--c2:#131217;--b:#26252d;--t:#f4f3f7;--m:#8d8c98;--a:#b79ae6;--glow:rgba(139,92,246,.28)}*{box-sizing:border-box}
+html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--t);font:15px/1.5 "Geist",Inter,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding:34px 24px 90px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:26px}h1{font-size:30px;font-weight:700;letter-spacing:-.025em;margin:0}
+.tools{display:flex;gap:10px;flex-wrap:wrap}.sr{position:relative}.sr svg{position:absolute;left:12px;top:50%;margin-top:-8px;width:16px;height:16px;stroke:var(--m);fill:none;stroke-width:2;stroke-linecap:round}
+.sr input,.sel{background:var(--c);border:1px solid var(--b);color:var(--t);border-radius:12px;height:40px;padding:0 14px;font:inherit;font-size:14px;outline:none}
+.sr input{padding-left:36px;width:200px}.sel{appearance:none;-webkit-appearance:none;padding-right:34px;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238d8c98' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+.sr input:focus,.sel:focus{border-color:#4a4658}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.card{position:relative;display:block;background:var(--c);border:1px solid var(--b);border-radius:20px;padding:6px 6px 14px;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s,border-color .35s}
+.card:hover{transform:translateY(-3px);border-color:#3a3646;box-shadow:0 22px 50px -22px var(--glow),-10px 14px 40px -26px var(--glow)}
+.thumb{position:relative;border-radius:15px;overflow:hidden;background:var(--c2);aspect-ratio:660/380}.thumb img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.card:hover .thumb img{transform:scale(1.035)}
+.new{position:absolute;left:10px;top:10px;padding:4px 9px;border-radius:7px;background:rgba(139,92,246,.28);color:#d9c8ff;font-size:10.5px;font-weight:700;letter-spacing:.1em;backdrop-filter:blur(6px)}
+.heart{position:absolute;right:10px;top:10px;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:rgba(15,14,19,.7);border:1px solid rgba(255,255,255,.1);opacity:0;transform:translateY(-4px);transition:.25s;cursor:pointer;backdrop-filter:blur(6px)}
+.heart svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2;stroke-linejoin:round;transition:.2s}.card:hover .heart,.heart.on{opacity:1;transform:none}.heart.on svg{fill:#ff6b9a;stroke:#ff6b9a}
+.meta{padding:13px 12px 0}.meta b{display:block;font-size:15.5px;font-weight:600;letter-spacing:-.01em;transition:color .25s}.card:hover .meta b{color:var(--a)}
+.meta small{display:block;margin-top:3px;font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--m)}
+.empty{color:var(--m);padding:60px 0;text-align:center}
+.up{position:fixed;right:22px;bottom:22px;width:44px;height:44px;border-radius:13px;background:var(--c);border:1px solid var(--b);color:var(--t);display:grid;place-items:center;cursor:pointer;opacity:0;pointer-events:none;transition:.3s}.up.show{opacity:1;pointer-events:auto}.up:hover{border-color:#4a4658}
+.up svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.back{display:inline-flex;align-items:center;gap:6px;margin-bottom:20px;color:var(--m);font-size:14px}.back:hover{color:var(--t)}
+.two{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:22px}.two>div{min-width:0}.sub{color:var(--m);margin:6px 0 26px}
+.panel{background:var(--c);border:1px solid var(--b);border-radius:20px;padding:6px}
+.sb{position:relative;aspect-ratio:660/380;overflow:hidden;border-radius:15px;background:#000}.sb iframe{position:absolute;left:0;top:0;width:660px;height:380px;border:0;transform-origin:0 0}
+.btn{display:inline-flex;align-items:center;gap:8px;background:#f4f3f7;color:#0f0e13;padding:0 18px;height:42px;border-radius:12px;font-weight:600;border:0;cursor:pointer;font:inherit;font-weight:600;font-size:14px;transition:.2s}.btn:hover{background:#fff;transform:translateY(-1px)}
+.ghost{background:var(--c);border:1px solid var(--b);color:var(--t)}.ghost:hover{background:#201f26}.row{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
+.tabs{display:flex;gap:6px;margin-bottom:10px}.tabs button{background:var(--c);border:1px solid var(--b);color:var(--m);height:34px;padding:0 15px;border-radius:10px;cursor:pointer;font:inherit;font-size:13.5px}.tabs .on{background:#f4f3f7;border-color:#f4f3f7;color:#0f0e13;font-weight:600}
+pre{margin:0;background:var(--c2);border:1px solid var(--b);border-radius:18px;padding:18px;overflow:auto;max-height:560px;font:12.5px/1.65 ui-monospace,"SF Mono",Menlo,Consolas,monospace;color:#cfcdda}
+.cap{white-space:pre-line;color:var(--m);background:var(--c);border:1px solid var(--b);border-radius:16px;padding:16px;margin-top:6px;font-size:14px}
+@media(max-width:860px){.two{grid-template-columns:1fr}}</style></head><body><div class="wrap"><a class="back" href="../../">← UI Components</a>
+<h1>Frost Dock</h1><p class="sub">Navigation · Icons swell toward the cursor, neighbours ride along</p>
+<div class="two"><div><div class="panel"><div class="sb" id="sb"><iframe src="preview.html" title="Live demo"></iframe></div></div><div class="row"><a class="btn" href="frost-dock.zip" download>Download code (.zip)</a><a class="btn ghost" href="reel.mp4">▶ Watch reel</a><button class="btn ghost" id="cp">Copy code</button></div>
+<div class="cap">Your money apps, but they breathe. 💸
+A frosted dock where icons swell toward your cursor and neighbours ride along.
+Save this for your next nav build ✨
+
+#webdev #css #uidesign #microinteractions #frontend #javascript</div></div>
+<div><div class="tabs"><button class="on" data-k="html">HTML</button><button data-k="css">CSS</button><button data-k="js">JS</button></div><pre id="p-html" style="display:block">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;title&gt;Frost Dock&lt;/title&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;app.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class=&quot;wrap&quot;&gt;
+    &lt;nav class=&quot;dock&quot; id=&quot;dock&quot; aria-label=&quot;Dock&quot;&gt;
+      &lt;a class=&quot;it&quot; style=&quot;--g1:#3a4048;--g2:#1c2026&quot;&gt;
+        &lt;span class=&quot;tip&quot;&gt;Budget&lt;/span&gt;
+        &lt;span class=&quot;glyph bars&quot;&gt;&lt;i&gt;&lt;/i&gt;&lt;i&gt;&lt;/i&gt;&lt;i&gt;&lt;/i&gt;&lt;/span&gt;
+      &lt;/a&gt;
+      &lt;a class=&quot;it&quot; style=&quot;--g1:#434a54;--g2:#20242b&quot;&gt;
+        &lt;span class=&quot;tip&quot;&gt;Bills&lt;/span&gt;
+        &lt;span class=&quot;glyph doc&quot;&gt;&lt;/span&gt;
+      &lt;/a&gt;
+      &lt;a class=&quot;it&quot; style=&quot;--g1:#c6f24e;--g2:#a6d92f&quot;&gt;
+        &lt;span class=&quot;tip&quot;&gt;Savings&lt;/span&gt;
+        &lt;span class=&quot;glyph coin&quot;&gt;&lt;/span&gt;
+      &lt;/a&gt;
+      &lt;a class=&quot;it&quot; style=&quot;--g1:#434a54;--g2:#20242b&quot;&gt;
+        &lt;span class=&quot;tip&quot;&gt;Cards&lt;/span&gt;
+        &lt;span class=&quot;glyph card&quot;&gt;&lt;/span&gt;
+      &lt;/a&gt;
+      &lt;a class=&quot;it&quot; style=&quot;--g1:#3a4048;--g2:#1c2026&quot;&gt;
+        &lt;span class=&quot;tip&quot;&gt;Reports&lt;/span&gt;
+        &lt;span class=&quot;glyph pie&quot;&gt;&lt;/span&gt;
+      &lt;/a&gt;
+      &lt;a class=&quot;it&quot; style=&quot;--g1:#434a54;--g2:#20242b&quot;&gt;
+        &lt;span class=&quot;tip&quot;&gt;Wallet&lt;/span&gt;
+        &lt;span class=&quot;glyph wallet&quot;&gt;&lt;/span&gt;
+      &lt;/a&gt;
+      &lt;a class=&quot;it&quot; style=&quot;--g1:#3a4048;--g2:#1c2026&quot;&gt;
+        &lt;span class=&quot;tip&quot;&gt;Settings&lt;/span&gt;
+        &lt;span class=&quot;glyph gear&quot;&gt;&lt;/span&gt;
+      &lt;/a&gt;
+    &lt;/nav&gt;
+  &lt;/div&gt;
+  &lt;script src=&quot;app.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre><pre id="p-css" style="display:none">:root {
+  --base: 52px;
+  --accent: #c6f24e;
+  --ink: #1c2026;
+  --fg: #f4f6f8;
+  --radius: 22px;
+  --ease: cubic-bezier(.34, 1.56, .64, 1);
+  --shadow: 0 20px 50px -20px rgba(0, 0, 0, .25), 0 4px 12px -6px rgba(0, 0, 0, .18);
+}
+
+.wrap {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, system-ui, sans-serif;
+}
+
+.dock {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 116px;
+  padding: 0 12px 12px;
+  border-radius: var(--radius);
+  position: relative;
+  background: rgba(255, 255, 255, .55);
+  backdrop-filter: blur(20px) saturate(1.6);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  border: 1px solid rgba(255, 255, 255, .6);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .8), var(--shadow);
+}
+
+.it {
+  position: relative;
+  width: var(--base);
+  height: var(--base);
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  background: linear-gradient(145deg, var(--g1), var(--g2));
+  cursor: pointer;
+  transform-origin: bottom center;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), inset 0 -2px 4px rgba(0, 0, 0, .18), 0 8px 14px -6px rgba(0, 0, 0, .35);
+  transition: transform .28s var(--ease), box-shadow .28s var(--ease);
+}
+
+.it:active {
+  transform: scale(.94);
+}
+
+.it:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--accent), 0 8px 14px -6px rgba(0, 0, 0, .35);
+}
+
+.tip {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  padding: 5px 11px;
+  border-radius: 9px;
+  white-space: nowrap;
+  font: 600 12px/1 inherit;
+  letter-spacing: .01em;
+  color: var(--fg);
+  background: rgba(20, 22, 26, .85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .12), 0 8px 20px -6px rgba(0, 0, 0, .5);
+  opacity: 0;
+  transform: translate(-50%, 6px) scale(.9);
+  transition: opacity .2s, transform .3s var(--ease);
+  pointer-events: none;
+}
+
+.it.on .tip {
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
+}
+
+.glyph {
+  position: relative;
+  display: block;
+  width: 52%;
+  height: 52%;
+}
+
+.bars {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.bars i {
+  width: 22%;
+  border-radius: 2px;
+  background: var(--accent);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .15);
+}
+
+.bars i:nth-child(1) {
+  height: 45%;
+}
+
+.bars i:nth-child(2) {
+  height: 75%;
+}
+
+.bars i:nth-child(3) {
+  height: 100%;
+}
+
+.doc {
+  border-radius: 3px;
+  background: #eef2f6;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .12);
+}
+
+.doc::after {
+  content: &quot;&quot;;
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  top: 30%;
+  height: 2px;
+  background: #9aa4b0;
+  box-shadow: 0 8px 0 #9aa4b0, 0 16px 0 #9aa4b0;
+}
+
+.coin {
+  border-radius: 50%;
+  background: var(--ink);
+  box-shadow: inset 0 0 0 3px var(--accent);
+}
+
+.coin::after {
+  content: &quot;&quot;;
+  position: absolute;
+  inset: 30%;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.card {
+  border-radius: 4px;
+  background: linear-gradient(160deg, #dfe6ee, #aeb8c4);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .12);
+}
+
+.card::after {
+  content: &quot;&quot;;
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  top: 22%;
+  height: 22%;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
+.pie {
+  border-radius: 50%;
+  background: conic-gradient(var(--accent) 0 62%, #eef2f6 62% 100%);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .12);
+}
+
+.wallet {
+  border-radius: 4px;
+  background: #eef2f6;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .12);
+}
+
+.wallet::after {
+  content: &quot;&quot;;
+  position: absolute;
+  right: 0;
+  top: 30%;
+  width: 34%;
+  height: 40%;
+  border-radius: 3px 0 0 3px;
+  background: var(--accent);
+}
+
+.gear {
+  border-radius: 50%;
+  background: #eef2f6;
+  box-shadow: inset 0 0 0 4px var(--accent);
+}
+
+.gear::after {
+  content: &quot;&quot;;
+  position: absolute;
+  inset: 38%;
+  border-radius: 50%;
+  background: var(--ink);
+}
+</pre><pre id="p-js" style="display:none">const dock = document.getElementById(&#x27;dock&#x27;);
+const items = [...dock.querySelectorAll(&#x27;.it&#x27;)];
+const BASE = 52,
+  GAIN = 46,
+  SPREAD = 78;
+
+function set(x) {
+  let hot = null,
+    best = 1e9;
+  items.forEach((el) =&gt; {
+    el.style.transition = &#x27;none&#x27;;
+    const r = el.getBoundingClientRect();
+    const d = x == null ? 1e3 : Math.abs(x - (r.left +
+      r.width / 2));
+    const size = BASE + GAIN * Math.exp(-(d * d) / (
+      2 * SPREAD * SPREAD));
+    el.style.width = el.style.height = size + &#x27;px&#x27;;
+    if (d &lt; best) {
+      best = d;
+      hot = el;
+    }
+  });
+  items.forEach((el) =&gt; el.classList.toggle(&#x27;on&#x27;, el ===
+    hot &amp;&amp; best &lt; 40));
+}
+
+dock.addEventListener(&#x27;mousemove&#x27;, (e) =&gt; set(e.clientX));
+dock.addEventListener(&#x27;mouseleave&#x27;, () =&gt; {
+  items.forEach((el) =&gt; {
+    el.style.transition =
+      &#x27;width .35s cubic-bezier(.34,1.56,.64,1), height .35s cubic-bezier(.34,1.56,.64,1)&#x27;;
+    el.style.width = el.style.height = &#x27;&#x27;;
+    el.classList.remove(&#x27;on&#x27;);
+  });
+});
+</pre></div></div></div>
+<script>var sb=document.getElementById('sb');function fit(){sb.firstChild.style.transform='scale('+sb.clientWidth/660+')'}fit();addEventListener('resize',fit);var k='html';[].forEach.call(document.querySelectorAll('.tabs button'),function(b){b.onclick=function(){k=b.dataset.k;[].forEach.call(document.querySelectorAll('.tabs button'),function(x){x.classList.toggle('on',x===b)});['html','css','js'].forEach(function(n){document.getElementById('p-'+n).style.display=n===k?'block':'none'})}});
+document.getElementById('cp').onclick=function(e){navigator.clipboard.writeText(document.getElementById('p-'+k).textContent);e.target.textContent='Copied ✓';setTimeout(function(){e.target.textContent='Copy code'},1400)}</script></body></html>

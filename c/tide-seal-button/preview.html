@@ -1,0 +1,245 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><style>*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden}body{display:grid;place-items:center;background:linear-gradient(135deg,#f3ecff 0%,#fdf4fa 55%,#eef6ff 100%);font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;font-feature-settings:'cv11','ss01'}button,input{font-family:inherit}*{-webkit-tap-highlight-color:transparent}button{-webkit-user-select:none;user-select:none}</style><style>:root {
+  --bg: #e6eaf2;
+  --fg: #4b5563;
+  --muted: #8a93a6;
+  --accent: #6c8cff;
+  --accent-ink: #ffffff;
+  --radius: 22px;
+  --shadow: 8px 8px 18px #c5cad6, -8px -8px 18px #ffffff;
+  --shadow-hover: 6px 6px 14px #c5cad6, -6px -6px 14px #ffffff;
+  --shadow-press: inset 5px 5px 12px #c5cad6, inset -5px -5px 12px #ffffff;
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  --spring: cubic-bezier(.34, 1.56, .64, 1);
+}
+
+.stage {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.hb {
+  --wave: 6px;
+  --w: 0px;
+  --h: 0px;
+  --cycles: 1.4;
+  --p: 0;
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  isolation: isolate;
+  height: 56px;
+  padding: 0 30px;
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--fg);
+  font: 600 17px/1 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  letter-spacing: .01em;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: var(--shadow);
+  transition: transform .24s var(--ease), box-shadow .24s var(--ease);
+}
+
+.hb:hover {
+  box-shadow: var(--shadow-hover);
+}
+
+.hb:focus-visible {
+  box-shadow: var(--shadow), 0 0 0 3px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+.hb[data-phase="holding"] {
+  transform: scale(.97);
+  box-shadow: var(--shadow-press);
+}
+
+.hb[data-phase="done"] {
+  transform: scale(1);
+  box-shadow: var(--shadow);
+}
+
+.pulse {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: var(--radius);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.hb[data-phase="done"] .pulse {
+  animation: pulse .6s var(--ease) forwards;
+}
+
+@keyframes pulse {
+  from {
+    opacity: 1;
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 50%, transparent);
+  }
+
+  to {
+    opacity: 0;
+    box-shadow: 0 0 0 14px transparent;
+  }
+}
+
+.label {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+}
+
+.label>span {
+  grid-area: 1 / 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  transition: opacity .22s var(--ease), filter .22s var(--ease);
+}
+
+.label svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.done {
+  opacity: 0;
+  filter: blur(2px);
+}
+
+.hb[data-phase="done"] .idle {
+  opacity: 0;
+  filter: blur(2px);
+}
+
+.hb[data-phase="done"] .done {
+  opacity: 1;
+  filter: blur(0);
+}
+
+.clip {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: var(--radius);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.fill,
+.crest {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 92%, #ffffff), var(--accent));
+  color: var(--accent-ink);
+}
+
+.fill {
+  clip-path: inset(0 calc((1 - var(--p)) * (100% + .75 * var(--wave)) - var(--p) * .25 * var(--wave)) 0 0);
+}
+
+.crest {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='200' viewBox='0 0 20 200' preserveAspectRatio='none'%3E%3Cpath d='M0 0H10C18 8 18 25.3 10 33.3S2 58.7 10 66.7S18 92 10 100S2 125.3 10 133.3S18 158.7 10 166.7S2 192 10 200H0Z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='200' viewBox='0 0 20 200' preserveAspectRatio='none'%3E%3Cpath d='M0 0H10C18 8 18 25.3 10 33.3S2 58.7 10 66.7S18 92 10 100S2 125.3 10 133.3S18 158.7 10 166.7S2 192 10 200H0Z'/%3E%3C/svg%3E");
+  -webkit-mask-repeat: repeat-y;
+  mask-repeat: repeat-y;
+  -webkit-mask-size: var(--wave) calc(var(--h) * 2);
+  mask-size: var(--wave) calc(var(--h) * 2);
+  -webkit-mask-position-x: calc(-1 * var(--wave) + var(--p) * (var(--w) + var(--wave)));
+  mask-position-x: calc(-1 * var(--wave) + var(--p) * (var(--w) + var(--wave)));
+  -webkit-mask-position-y: calc(-1 * var(--p) * var(--cycles) * var(--h));
+  mask-position-y: calc(-1 * var(--p) * var(--cycles) * var(--h));
+}
+</style></head><body><div id="__z" style="width:100%;height:100%;display:grid;place-items:center;transform-origin:50% 50%"><div class="stage">
+  <button class="hb" id="hb" data-phase="idle" type="button" aria-label="Hold to seal">
+    <span class="pulse"></span>
+    <span class="label">
+      <span class="idle">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 3l7 3v5c0 4.4-3 8.3-7 9.5C8 19.3 5 15.4 5 11V6l7-3z"/>
+        </svg>
+        Hold to seal
+      </span>
+      <span class="done">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M5.5 12.5l4.2 4.2L18.5 8"/>
+        </svg>
+        Sealed
+      </span>
+    </span>
+    <span class="clip">
+      <span class="fill"></span>
+      <span class="crest"></span>
+    </span>
+  </button>
+</div>
+</div><div id="__cur" style="position:fixed;left:0;top:0;width:34px;height:34px;pointer-events:none;z-index:2147483647;opacity:0;transform:translate(-100px,-100px);transition:opacity .25s"><svg viewBox="0 0 24 24" width="34" height="34" style="filter:drop-shadow(0 3px 5px rgba(0,0,0,.45))"><path d="M4 2.5v17.2l4.6-4.1 3.1 6.6 3-1.4-3.1-6.5 6.3-.3z" fill="#fff" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+<style>#__rip{position:fixed;width:12px;height:12px;border-radius:50%;border:3px solid rgba(124,92,255,.9);pointer-events:none;z-index:2147483646;transform:translate(-50%,-50%) scale(.2);opacity:0}#__rip.go{animation:__rip .55s ease-out}@keyframes __rip{0%{opacity:.9;transform:translate(-50%,-50%) scale(.3)}100%{opacity:0;transform:translate(-50%,-50%) scale(4.2)}}</style><div id="__rip"></div>
+<script>(function(){var c=document.getElementById('__cur'),r=document.getElementById('__rip');addEventListener('mousemove',function(e){c.style.opacity=1;c.style.transform='translate('+e.clientX+'px,'+e.clientY+'px)'},true);addEventListener('mousedown',function(e){c.firstElementChild.style.transform='scale(.82)';r.style.left=e.clientX+'px';r.style.top=e.clientY+'px';r.classList.remove('go');void r.offsetWidth;r.classList.add('go')},true);addEventListener('mouseup',function(){c.firstElementChild.style.transform='scale(1)'},true)})();</script><script>const btn = document.getElementById('hb');
+const label = btn.querySelector('.label');
+const HOLD = 1500,
+  RELEASE = 200;
+let p = 0,
+  raf = 0,
+  timer = 0;
+
+btn.querySelectorAll('.fill, .crest').forEach((el) =>
+  el.appendChild(label.cloneNode(true)));
+btn.style.setProperty('--w', btn.offsetWidth + 'px');
+btn.style.setProperty('--h', btn.offsetHeight + 'px');
+
+const easeOut = (t) => 1 - Math.pow(1 - t, 3);
+
+function drive(to, ms, ease) {
+  cancelAnimationFrame(raf);
+  const from = p,
+    t0 = performance.now();
+  (function step(now) {
+    const t = ms > 0 ? Math.min(1, (now - t0) / ms) : 1;
+    p = from + (to - from) * ease(t);
+    btn.style.setProperty('--p', p.toFixed(4));
+    if (t < 1) raf = requestAnimationFrame(step);
+    else if (to === 1) finish();
+  })(t0);
+}
+
+function finish() {
+  if (btn.dataset.phase !== 'holding') return;
+  btn.dataset.phase = 'done';
+  timer = setTimeout(() => {
+    btn.dataset.phase = 'idle';
+    drive(0, RELEASE, easeOut);
+  }, 1200);
+}
+
+btn.addEventListener('pointerdown', (e) => {
+  if (btn.dataset.phase !== 'idle') return;
+  btn.dataset.phase = 'holding';
+  drive(1, HOLD, (t) => t);
+  try {
+    btn.setPointerCapture(e.pointerId);
+  } catch (_) {}
+});
+
+function release() {
+  if (btn.dataset.phase !== 'holding') return;
+  btn.dataset.phase = 'idle';
+  drive(0, RELEASE, easeOut);
+}
+btn.addEventListener('pointerup', release);
+btn.addEventListener('pointercancel', release);
+</script><script>addEventListener('load',function(){setTimeout(function(){var z=document.getElementById('__z'),l=1e9,t=1e9,r=0,b=0;[].forEach.call(z.children,function(e){var x=e.getBoundingClientRect();if(!x.width)return;l=Math.min(l,x.left);t=Math.min(t,x.top);r=Math.max(r,x.right);b=Math.max(b,x.bottom)});var w=r-l,h=b-t;if(w>0&&h>0){var k=Math.max(1,Math.min(1.5,590/w,330/h));z.style.transform='scale('+k.toFixed(3)+')'}},60)})</script></body></html>

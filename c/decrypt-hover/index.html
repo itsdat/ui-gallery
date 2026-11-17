@@ -1,0 +1,203 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Decrypt Hover — UI Components</title>
+<meta property="og:image" content="thumb.jpg"><style>:root{--bg:#0f0e13;--c:#19181e;--c2:#131217;--b:#26252d;--t:#f4f3f7;--m:#8d8c98;--a:#b79ae6;--glow:rgba(139,92,246,.28)}*{box-sizing:border-box}
+html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--t);font:15px/1.5 "Geist",Inter,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding:34px 24px 90px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:26px}h1{font-size:30px;font-weight:700;letter-spacing:-.025em;margin:0}
+.tools{display:flex;gap:10px;flex-wrap:wrap}.sr{position:relative}.sr svg{position:absolute;left:12px;top:50%;margin-top:-8px;width:16px;height:16px;stroke:var(--m);fill:none;stroke-width:2;stroke-linecap:round}
+.sr input,.sel{background:var(--c);border:1px solid var(--b);color:var(--t);border-radius:12px;height:40px;padding:0 14px;font:inherit;font-size:14px;outline:none}
+.sr input{padding-left:36px;width:200px}.sel{appearance:none;-webkit-appearance:none;padding-right:34px;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238d8c98' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+.sr input:focus,.sel:focus{border-color:#4a4658}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.card{position:relative;display:block;background:var(--c);border:1px solid var(--b);border-radius:20px;padding:6px 6px 14px;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s,border-color .35s}
+.card:hover{transform:translateY(-3px);border-color:#3a3646;box-shadow:0 22px 50px -22px var(--glow),-10px 14px 40px -26px var(--glow)}
+.thumb{position:relative;border-radius:15px;overflow:hidden;background:var(--c2);aspect-ratio:660/380}.thumb img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.card:hover .thumb img{transform:scale(1.035)}
+.new{position:absolute;left:10px;top:10px;padding:4px 9px;border-radius:7px;background:rgba(139,92,246,.28);color:#d9c8ff;font-size:10.5px;font-weight:700;letter-spacing:.1em;backdrop-filter:blur(6px)}
+.heart{position:absolute;right:10px;top:10px;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:rgba(15,14,19,.7);border:1px solid rgba(255,255,255,.1);opacity:0;transform:translateY(-4px);transition:.25s;cursor:pointer;backdrop-filter:blur(6px)}
+.heart svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2;stroke-linejoin:round;transition:.2s}.card:hover .heart,.heart.on{opacity:1;transform:none}.heart.on svg{fill:#ff6b9a;stroke:#ff6b9a}
+.meta{padding:13px 12px 0}.meta b{display:block;font-size:15.5px;font-weight:600;letter-spacing:-.01em;transition:color .25s}.card:hover .meta b{color:var(--a)}
+.meta small{display:block;margin-top:3px;font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--m)}
+.empty{color:var(--m);padding:60px 0;text-align:center}
+.up{position:fixed;right:22px;bottom:22px;width:44px;height:44px;border-radius:13px;background:var(--c);border:1px solid var(--b);color:var(--t);display:grid;place-items:center;cursor:pointer;opacity:0;pointer-events:none;transition:.3s}.up.show{opacity:1;pointer-events:auto}.up:hover{border-color:#4a4658}
+.up svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.back{display:inline-flex;align-items:center;gap:6px;margin-bottom:20px;color:var(--m);font-size:14px}.back:hover{color:var(--t)}
+.two{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:22px}.two>div{min-width:0}.sub{color:var(--m);margin:6px 0 26px}
+.panel{background:var(--c);border:1px solid var(--b);border-radius:20px;padding:6px}
+.sb{position:relative;aspect-ratio:660/380;overflow:hidden;border-radius:15px;background:#000}.sb iframe{position:absolute;left:0;top:0;width:660px;height:380px;border:0;transform-origin:0 0}
+.btn{display:inline-flex;align-items:center;gap:8px;background:#f4f3f7;color:#0f0e13;padding:0 18px;height:42px;border-radius:12px;font-weight:600;border:0;cursor:pointer;font:inherit;font-weight:600;font-size:14px;transition:.2s}.btn:hover{background:#fff;transform:translateY(-1px)}
+.ghost{background:var(--c);border:1px solid var(--b);color:var(--t)}.ghost:hover{background:#201f26}.row{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
+.tabs{display:flex;gap:6px;margin-bottom:10px}.tabs button{background:var(--c);border:1px solid var(--b);color:var(--m);height:34px;padding:0 15px;border-radius:10px;cursor:pointer;font:inherit;font-size:13.5px}.tabs .on{background:#f4f3f7;border-color:#f4f3f7;color:#0f0e13;font-weight:600}
+pre{margin:0;background:var(--c2);border:1px solid var(--b);border-radius:18px;padding:18px;overflow:auto;max-height:560px;font:12.5px/1.65 ui-monospace,"SF Mono",Menlo,Consolas,monospace;color:#cfcdda}
+.cap{white-space:pre-line;color:var(--m);background:var(--c);border:1px solid var(--b);border-radius:16px;padding:16px;margin-top:6px;font-size:14px}
+@media(max-width:860px){.two{grid-template-columns:1fr}}</style></head><body><div class="wrap"><a class="back" href="../../">← UI Components</a>
+<h1>Decrypt Hover</h1><p class="sub">Hover micro-interaction · Scrambled filenames resolve left-to-right on hover</p>
+<div class="two"><div><div class="panel"><div class="sb" id="sb"><iframe src="preview.html" title="Live demo"></iframe></div></div><div class="row"><a class="btn" href="decrypt-hover.zip" download>Download code (.zip)</a><a class="btn ghost" href="reel.mp4">▶ Watch reel</a><button class="btn ghost" id="cp">Copy code</button></div>
+<div class="cap">Encrypted filenames that decrypt on hover. 🔐
+Watch the noise resolve left-to-right into clean labels.
+Save this for your next password-vault UI. #ui
+
+#webdev #css #javascript #uianimation #microinteraction</div></div>
+<div><div class="tabs"><button class="on" data-k="html">HTML</button><button data-k="css">CSS</button><button data-k="js">JS</button></div><pre id="p-html" style="display:block">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;title&gt;Decrypt Hover&lt;/title&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;app.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class=&quot;box&quot;&gt;
+    &lt;div class=&quot;head&quot;&gt;
+      &lt;span class=&quot;dot&quot;&gt;&lt;/span&gt;
+      &lt;h2&gt;Vault files&lt;/h2&gt;
+      &lt;span class=&quot;count&quot;&gt;3 items&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;ul id=&quot;list&quot;&gt;
+      &lt;li data-t=&quot;Q3_ROADMAP.pdf&quot;&gt;&lt;span class=&quot;k&quot;&gt;01&lt;/span&gt;&lt;span class=&quot;t&quot;&gt;&lt;/span&gt;&lt;/li&gt;
+      &lt;li data-t=&quot;PAYROLL_2024.xlsx&quot;&gt;&lt;span class=&quot;k&quot;&gt;02&lt;/span&gt;&lt;span class=&quot;t&quot;&gt;&lt;/span&gt;&lt;/li&gt;
+      &lt;li data-t=&quot;KEYS_BACKUP.enc&quot;&gt;&lt;span class=&quot;k&quot;&gt;03&lt;/span&gt;&lt;span class=&quot;t&quot;&gt;&lt;/span&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+  &lt;script src=&quot;app.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre><pre id="p-css" style="display:none">:root {
+  --bg: #f5f9ff;
+  --fg: #0f172a;
+  --muted: #64748b;
+  --dim: #94a3b8;
+  --acc: #2563eb;
+  --tint: #dbeafe;
+  --line: rgba(37, 99, 235, .22);
+  --radius: 12px;
+  --shadow: 0 1px 2px rgba(15, 23, 42, .06), 0 8px 24px -8px rgba(37, 99, 235, .25);
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  --mono: ui-monospace, &#x27;SF Mono&#x27;, Menlo, Consolas, monospace;
+}
+
+.box {
+  width: 420px;
+  font-family: var(--mono);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 0 4px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--acc);
+  box-shadow: 0 0 0 3px var(--tint);
+}
+
+.head h2 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--fg);
+}
+
+.count {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  border-radius: var(--radius);
+  cursor: default;
+  background: #ffffff;
+  box-shadow: inset 0 0 0 1px rgba(15, 23, 42, .07), 0 1px 2px rgba(15, 23, 42, .06);
+  transition: background .3s var(--ease), box-shadow .3s var(--ease), transform .4s var(--ease);
+}
+
+li:hover {
+  background: #f8fbff;
+  box-shadow: inset 0 0 0 1px var(--line), var(--shadow);
+  transform: translateX(4px);
+}
+
+li:active {
+  transform: translateX(4px) scale(.985);
+}
+
+.k {
+  font-size: 12px;
+  color: var(--dim);
+  font-variant-numeric: tabular-nums;
+  transition: color .3s var(--ease);
+}
+
+li:hover .k {
+  color: var(--acc);
+}
+
+.t {
+  font-size: 18px;
+  letter-spacing: .01em;
+  color: var(--dim);
+  white-space: pre;
+  transition: color .3s var(--ease);
+}
+
+.t .r {
+  color: var(--fg);
+}
+</pre><pre id="p-js" style="display:none">const GLYPHS = &#x27;!&lt;&gt;-_\\/[]{}=+*^?#%&amp;01&#x27;;
+const rand = () =&gt; GLYPHS[Math.floor(Math.random() *
+  GLYPHS.length)];
+const scramble = (s) =&gt; s.replace(/[^ ]/g, rand);
+
+document.querySelectorAll(&#x27;li&#x27;).forEach((li) =&gt; {
+  const out = li.querySelector(&#x27;.t&#x27;);
+  const target = li.dataset.t;
+  let raf = 0;
+  out.textContent = scramble(target);
+
+  const decode = () =&gt; {
+    cancelAnimationFrame(raf);
+    const t0 = performance.now(),
+      D = 900;
+    (function frame(now) {
+      const n = Math.floor(Math.min(1, (now -
+        t0) / D) * target.length);
+      const rest = target.slice(n).replace(
+        /[^ ]/g, rand);
+      out.innerHTML = &#x27;&lt;span class=&quot;r&quot;&gt;&#x27; + target
+        .slice(0, n) + &#x27;&lt;/span&gt;&#x27; + rest;
+      if (n &lt; target.length) raf =
+        requestAnimationFrame(frame);
+      else out.innerHTML = &#x27;&lt;span class=&quot;r&quot;&gt;&#x27; +
+        target + &#x27;&lt;/span&gt;&#x27;;
+    })(t0);
+  };
+
+  li.addEventListener(&#x27;mouseenter&#x27;, decode);
+  li.addEventListener(&#x27;mouseleave&#x27;, () =&gt; {
+    cancelAnimationFrame(raf);
+    out.textContent = scramble(target);
+  });
+});
+</pre></div></div></div>
+<script>var sb=document.getElementById('sb');function fit(){sb.firstChild.style.transform='scale('+sb.clientWidth/660+')'}fit();addEventListener('resize',fit);var k='html';[].forEach.call(document.querySelectorAll('.tabs button'),function(b){b.onclick=function(){k=b.dataset.k;[].forEach.call(document.querySelectorAll('.tabs button'),function(x){x.classList.toggle('on',x===b)});['html','css','js'].forEach(function(n){document.getElementById('p-'+n).style.display=n===k?'block':'none'})}});
+document.getElementById('cp').onclick=function(e){navigator.clipboard.writeText(document.getElementById('p-'+k).textContent);e.target.textContent='Copied ✓';setTimeout(function(){e.target.textContent='Copy code'},1400)}</script></body></html>
