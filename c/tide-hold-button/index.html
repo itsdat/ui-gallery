@@ -30,13 +30,13 @@ html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--t);fo
 pre{margin:0;background:var(--c2);border:1px solid var(--b);border-radius:18px;padding:18px;overflow:auto;max-height:560px;font:12.5px/1.65 ui-monospace,"SF Mono",Menlo,Consolas,monospace;color:#cfcdda}
 .cap{white-space:pre-line;color:var(--m);background:var(--c);border:1px solid var(--b);border-radius:16px;padding:16px;margin-top:6px;font-size:14px}
 @media(max-width:860px){.two{grid-template-columns:1fr}}</style></head><body><div class="wrap"><a class="back" href="../../">← UI Components</a>
-<h1>Tide Hold Button</h1><p class="sub">Buttons · Hold to publish: a wavy blue tide sweeps in, then a check pops</p>
+<h1>Tide Hold Button</h1><p class="sub">Micro · Hold to publish — wavy tide fills, soft ring on land</p>
 <div class="two"><div><div class="panel"><div class="sb" id="sb"><iframe src="preview.html" title="Live demo"></iframe></div></div><div class="row"><a class="btn" href="tide-hold-button.zip" download>Download code (.zip)</a><a class="btn ghost" href="reel.mp4">▶ Watch reel</a><button class="btn ghost" id="cp">Copy code</button></div>
-<div class="cap">Hold the button, watch the tide roll in. 🌊
-A wavy clip-path fill that drains back in 200ms if you let go early — full hold flips to &#x27;Published&#x27;.
-Save this for your next publish flow. #uidesign
+<div class="cap">Hold to publish — watch the tide sweep in 🌊
+A wavy fill edge, label inverting at the seam, one soft ring when it lands.
+Save this for your next micro-interaction ✨
 
-#webdev #css #uianimation #microinteraction #frontend #javascript</div></div>
+#webdev #css #uidesign #microinteractions #frontend #javascript</div></div>
 <div><div class="tabs"><button class="on" data-k="html">HTML</button><button data-k="css">CSS</button><button data-k="js">JS</button></div><pre id="p-html" style="display:block">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
 &lt;head&gt;
@@ -51,15 +51,19 @@ Save this for your next publish flow. #uidesign
       &lt;span class=&quot;pulse&quot;&gt;&lt;/span&gt;
       &lt;span class=&quot;label&quot;&gt;
         &lt;span class=&quot;idle&quot;&gt;
-          &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M12 16V4M7 9l5-5 5 5M5 20h14&quot;/&gt;&lt;/svg&gt;
+          &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;
+            &lt;path d=&quot;M12 15V4M8 7.5L12 3.5l4 4M5 15v3.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V15&quot;/&gt;
+          &lt;/svg&gt;
           Hold to publish
         &lt;/span&gt;
         &lt;span class=&quot;done&quot;&gt;
-          &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5.5 12.5l4.2 4.2L18.5 8&quot;/&gt;&lt;/svg&gt;
+          &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;
+            &lt;path d=&quot;M5.5 12.5l4.2 4.2L18.5 8&quot;/&gt;
+          &lt;/svg&gt;
           Published
         &lt;/span&gt;
       &lt;/span&gt;
-      &lt;span class=&quot;clip&quot; aria-hidden=&quot;true&quot;&gt;
+      &lt;span class=&quot;clip&quot;&gt;
         &lt;span class=&quot;fill&quot;&gt;&lt;/span&gt;
         &lt;span class=&quot;crest&quot;&gt;&lt;/span&gt;
       &lt;/span&gt;
@@ -69,14 +73,15 @@ Save this for your next publish flow. #uidesign
 &lt;/body&gt;
 &lt;/html&gt;
 </pre><pre id="p-css" style="display:none">:root {
-  --bg: #fff7e6;
-  --fg: #111;
-  --muted: #6b6455;
-  --accent: #4dabf7;
-  --accent-ink: #0b3a63;
-  --radius: 999px;
-  --shadow: 4px 4px 0 #111;
-  --ease: cubic-bezier(.2, .8, .2, 1);
+  --bg: #e6eaf2;
+  --fg: #4b5563;
+  --muted: #8b93a7;
+  --accent: #6c8cff;
+  --accent-ink: #ffffff;
+  --radius: 22px;
+  --sh-dark: #c5cad6;
+  --sh-light: #ffffff;
+  --out: cubic-bezier(.2, .8, .2, 1);
   --spring: cubic-bezier(.34, 1.56, .64, 1);
 }
 
@@ -84,13 +89,13 @@ Save this for your next publish flow. #uidesign
   min-height: 340px;
   display: grid;
   place-items: center;
-  padding: 24px;
-  box-sizing: border-box;
+  font-family: system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, sans-serif;
 }
 
 .hb {
-  --hold: 1600ms;
-  --wave: 8px;
+  --fill: var(--accent);
+  --r: var(--radius);
+  --wave: 7px;
   --w: 0px;
   --h: 0px;
   --cycles: 1.4;
@@ -100,62 +105,64 @@ Save this for your next publish flow. #uidesign
   place-items: center;
   isolation: isolate;
   height: 56px;
-  padding: 0 28px;
-  border: 2.5px solid var(--fg);
-  border-radius: var(--radius);
-  background: var(--fg);
-  color: #fff7e6;
-  font: 800 14px/1 ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif;
-  letter-spacing: .09em;
-  text-transform: uppercase;
+  padding: 0 30px;
+  border: 0;
+  border-radius: var(--r);
+  background: var(--bg);
+  color: var(--fg);
+  font: 500 17px/1 system-ui, -apple-system, &quot;Segoe UI&quot;, Roboto, sans-serif;
+  letter-spacing: -.01em;
+  font-variant-numeric: tabular-nums;
   cursor: pointer;
   outline: none;
   user-select: none;
-  -webkit-tap-highlight-color: transparent;
-  box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, .14);
-  transition: transform .18s var(--ease), box-shadow .18s var(--ease), background-color .18s var(--ease);
+  -webkit-font-smoothing: antialiased;
+  box-shadow: 8px 8px 18px var(--sh-dark), -8px -8px 18px var(--sh-light), inset 0 1px 0 rgba(255, 255, 255, .7);
+  transition: transform .18s var(--out), box-shadow .22s var(--out), color .2s var(--out);
 }
 
-.hb:hover {
-  background: #1c1c1c;
+@media (hover: hover) and (pointer: fine) {
+  .hb:hover {
+    box-shadow: 6px 6px 14px var(--sh-dark), -6px -6px 14px var(--sh-light), inset 0 1px 0 rgba(255, 255, 255, .7);
+  }
 }
 
 .hb:focus-visible {
-  box-shadow: var(--shadow), 0 0 0 3px var(--bg), 0 0 0 5.5px var(--accent);
+  box-shadow: 8px 8px 18px var(--sh-dark), -8px -8px 18px var(--sh-light), 0 0 0 3px color-mix(in srgb, var(--fill) 45%, transparent);
 }
 
 .hb[data-phase=holding] {
-  transform: translate(4px, 4px) scale(.97);
-  box-shadow: 0 0 0 #111, inset 0 1px 0 rgba(255, 255, 255, .14);
+  transform: scale(.97);
+  box-shadow: inset 5px 5px 12px var(--sh-dark), inset -5px -5px 12px var(--sh-light);
+  transition: transform .16s var(--out), box-shadow .2s var(--out);
 }
 
 .hb[data-phase=done] {
-  transform: translate(4px, 4px);
-  box-shadow: 0 0 0 #111, inset 0 1px 0 rgba(255, 255, 255, .14);
+  box-shadow: 8px 8px 18px var(--sh-dark), -8px -8px 18px var(--sh-light), 0 12px 30px -10px color-mix(in srgb, var(--fill) 60%, transparent);
 }
 
 .pulse {
   position: absolute;
   inset: 0;
   z-index: 0;
-  border-radius: var(--radius);
+  border-radius: var(--r);
   pointer-events: none;
   opacity: 0;
 }
 
 .hb[data-phase=done] .pulse {
-  animation: pulse .6s var(--ease) forwards;
+  animation: pulse .6s var(--out) forwards;
 }
 
 @keyframes pulse {
   from {
-    opacity: .9;
-    box-shadow: 0 0 0 0 rgba(77, 171, 247, .6);
+    opacity: 1;
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--fill) 50%, transparent);
   }
 
   to {
     opacity: 0;
-    box-shadow: 0 0 0 18px rgba(77, 171, 247, 0);
+    box-shadow: 0 0 0 16px transparent;
   }
 }
 
@@ -170,9 +177,9 @@ Save this for your next publish flow. #uidesign
   grid-area: 1 / 1;
   display: inline-flex;
   align-items: center;
-  gap: 9px;
+  gap: 8px;
   white-space: nowrap;
-  transition: opacity .22s var(--ease), filter .22s var(--ease), transform .3s var(--spring);
+  transition: opacity .22s var(--out), filter .22s var(--out);
 }
 
 .label svg {
@@ -180,34 +187,32 @@ Save this for your next publish flow. #uidesign
   height: 18px;
   fill: none;
   stroke: currentColor;
-  stroke-width: 2;
+  stroke-width: 1.9;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
 .done {
   opacity: 0;
-  filter: blur(3px);
-  transform: scale(.9);
+  filter: blur(2px);
 }
 
 .hb[data-phase=done] .idle {
   opacity: 0;
-  filter: blur(3px);
-  transform: scale(.9);
+  filter: blur(2px);
 }
 
 .hb[data-phase=done] .done {
   opacity: 1;
   filter: blur(0);
-  transform: scale(1);
+  transition-delay: .08s;
 }
 
 .clip {
   position: absolute;
-  inset: -2.5px;
+  inset: 0;
   z-index: 3;
-  clip-path: inset(0 round var(--radius));
+  clip-path: inset(0 round var(--r));
   pointer-events: none;
 }
 
@@ -217,7 +222,7 @@ Save this for your next publish flow. #uidesign
   inset: 0;
   display: grid;
   place-items: center;
-  background: var(--accent);
+  background: var(--fill);
   color: var(--accent-ink);
 }
 
@@ -239,21 +244,24 @@ Save this for your next publish flow. #uidesign
 }
 </pre><pre id="p-js" style="display:none">const btn = document.getElementById(&#x27;hb&#x27;);
 const label = btn.querySelector(&#x27;.label&#x27;);
-const HOLD = 1600,
-  RELEASE = 200;
-let p = 0,
-  raf = 0,
-  timer = 0;
+const HOLD = 1600;
+const RELEASE = 200;
+let p = 0;
+let raf = 0;
+let timer = 0;
 
-btn.querySelectorAll(&#x27;.fill, .crest&#x27;).forEach((el) =&gt; el
-  .appendChild(label.cloneNode(true)));
+// duplicate the label into the fill layers so text flips at the edge
+btn.querySelectorAll(&#x27;.fill, .crest&#x27;).forEach((el) =&gt;
+  el.appendChild(label.cloneNode(true)));
 btn.style.setProperty(&#x27;--w&#x27;, btn.offsetWidth + &#x27;px&#x27;);
 btn.style.setProperty(&#x27;--h&#x27;, btn.offsetHeight + &#x27;px&#x27;);
 
+const easeOut = (t) =&gt; 1 - Math.pow(1 - t, 3);
+
 const drive = (to, ms, ease) =&gt; {
   cancelAnimationFrame(raf);
-  const from = p,
-    t0 = performance.now();
+  const from = p;
+  const t0 = performance.now();
   (function step(now) {
     const t = ms &gt; 0 ? Math.min(1, (now - t0) / ms) :
       1;
@@ -269,8 +277,8 @@ function finish() {
   btn.dataset.phase = &#x27;done&#x27;;
   timer = setTimeout(() =&gt; {
     btn.dataset.phase = &#x27;idle&#x27;;
-    drive(0, RELEASE, (t) =&gt; 1 - Math.pow(1 - t, 3));
-  }, 1400);
+    drive(0, RELEASE, easeOut);
+  }, 1200);
 }
 
 btn.addEventListener(&#x27;pointerdown&#x27;, (e) =&gt; {
@@ -285,7 +293,7 @@ btn.addEventListener(&#x27;pointerdown&#x27;, (e) =&gt; {
 const release = () =&gt; {
   if (btn.dataset.phase !== &#x27;holding&#x27;) return;
   btn.dataset.phase = &#x27;idle&#x27;;
-  drive(0, RELEASE, (t) =&gt; 1 - Math.pow(1 - t, 3));
+  drive(0, RELEASE, easeOut);
 };
 btn.addEventListener(&#x27;pointerup&#x27;, release);
 btn.addEventListener(&#x27;pointercancel&#x27;, release);

@@ -1,0 +1,264 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><style>*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden}body{display:grid;place-items:center;background:#07080f;font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;font-feature-settings:'cv11','ss01'}button,input{font-family:inherit}*{-webkit-tap-highlight-color:transparent}button{-webkit-user-select:none;user-select:none}</style><style>:root {
+  --bg: #0b0f0a;
+  --fg: #cfe8c4;
+  --muted: #6f8a68;
+  --accent: #7cff6b;
+  --amber: #ffb000;
+  --radius: 4px;
+  --shadow: 0 1px 0 rgba(255, 255, 255, .04) inset, 0 2px 4px rgba(0, 0, 0, .5), 0 24px 48px -20px rgba(0, 0, 0, .9);
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  --spring: cubic-bezier(.34, 1.3, .64, 1);
+}
+
+.area {
+  display: grid;
+  place-items: center;
+  width: 560px;
+  height: 340px;
+  perspective: 900px;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+}
+
+.card {
+  --rx: 0deg;
+  --ry: 0deg;
+  --gx: 50%;
+  --gy: 30%;
+  position: relative;
+  width: 252px;
+  height: 324px;
+  padding: 12px;
+  border-radius: var(--radius);
+  color: var(--accent);
+  background: linear-gradient(160deg, #121a0f, #070a06 70%);
+  box-shadow: var(--shadow);
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rx)) rotateY(var(--ry));
+  transition: transform .5s ease-out, box-shadow .5s var(--ease);
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 1px rgba(124, 255, 107, .2), inset 0 1px 0 rgba(255, 255, 255, .06);
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: repeating-linear-gradient(0deg, rgba(0, 0, 0, .22) 0 1px, transparent 1px 3px);
+  opacity: .45;
+}
+
+.card.live {
+  transition: transform .08s linear, box-shadow .2s var(--ease);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .06) inset, 0 4px 8px rgba(0, 0, 0, .55), 0 32px 56px -20px rgba(0, 0, 0, .95);
+}
+
+.art {
+  position: relative;
+  height: 172px;
+  border-radius: 3px;
+  overflow: hidden;
+  transform: translateZ(26px);
+  background: radial-gradient(circle at 50% 45%, #152410, #060a05 75%);
+  box-shadow: inset 0 0 0 1px rgba(124, 255, 107, .16), 0 12px 20px -12px rgba(0, 0, 0, .85);
+}
+
+.disc {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120px;
+  height: 120px;
+  margin: -60px 0 0 -60px;
+  border-radius: 50%;
+  background: repeating-radial-gradient(circle at 50% 50%, #0c120a 0 3px, #1a2716 3px 4px);
+  box-shadow: inset 0 0 0 1px rgba(124, 255, 107, .28);
+  transition: transform .5s var(--spring);
+}
+
+.label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 38px;
+  height: 38px;
+  margin: -19px 0 0 -19px;
+  border-radius: 50%;
+  background: var(--amber);
+  box-shadow: inset 0 0 0 6px #070a06;
+}
+
+.card.live .disc {
+  transform: translate(calc(var(--ry) * -.8), calc(var(--rx) * .8));
+}
+
+.track {
+  position: absolute;
+  left: 10px;
+  bottom: 8px;
+  font-size: 10px;
+  letter-spacing: .16em;
+  color: var(--amber);
+  text-shadow: 0 0 8px currentColor;
+}
+
+.badge {
+  position: absolute;
+  top: 26px;
+  right: 22px;
+  padding: 5px 10px;
+  border-radius: 3px;
+  transform: translateZ(60px);
+  font: 700 10px/1 ui-monospace, Menlo, monospace;
+  letter-spacing: .14em;
+  color: #0a0f08;
+  background: var(--amber);
+  box-shadow: 0 6px 12px -4px rgba(0, 0, 0, .7);
+}
+
+.info {
+  padding: 16px 6px 0;
+  transform: translateZ(40px);
+}
+
+.title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  text-shadow: 0 0 8px currentColor;
+}
+
+.info p {
+  margin: 6px 0 0;
+  font-size: 12.5px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.dot {
+  color: var(--amber);
+}
+
+.barcode {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 16px;
+  height: 26px;
+  display: flex;
+  gap: 3px;
+  transform: translateZ(18px);
+  opacity: .85;
+}
+
+.barcode i {
+  flex: 1;
+  background: var(--accent);
+  border-radius: 1px;
+}
+
+.barcode i:nth-child(3n) {
+  flex: .5;
+}
+
+.barcode i:nth-child(4n) {
+  flex: 1.6;
+}
+
+.barcode i:nth-child(5n) {
+  flex: .8;
+}
+
+.glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+  opacity: 0;
+  transition: opacity .4s var(--ease);
+  background: radial-gradient(260px circle at var(--gx) var(--gy), rgba(255, 255, 255, .8), transparent 60%);
+}
+
+.card.live .glare {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .card,
+  .disc,
+  .glare {
+    transition-duration: .01ms;
+  }
+}
+</style></head><body><canvas id="__fx" style="position:fixed;inset:0;width:100%;height:100%;z-index:-1;display:block"></canvas>
+<script>(function(){var cv=document.getElementById('__fx'),gl=cv.getContext('webgl',{antialias:false,alpha:false});if(!gl)return;
+var VS='attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}',FS='precision highp float;uniform vec2 R;uniform float T;uniform vec3 c0;uniform vec3 c1;uniform vec3 c2;uniform vec2 M;uniform float S;\n\nvec3 permute(vec3 x){return mod(((x*34.0)+1.0)*x,289.0);}\nfloat snoise(vec2 v){\n  const vec4 C=vec4(0.211324865405187,0.366025403784439,-0.577350269189626,0.024390243902439);\n  vec2 i=floor(v+dot(v,C.yy)); vec2 x0=v-i+dot(i,C.xx);\n  vec2 i1=(x0.x>x0.y)?vec2(1.0,0.0):vec2(0.0,1.0);\n  vec4 x12=x0.xyxy+C.xxzz; x12.xy-=i1; i=mod(i,289.0);\n  vec3 p=permute(permute(i.y+vec3(0.0,i1.y,1.0))+i.x+vec3(0.0,i1.x,1.0));\n  vec3 m=max(0.5-vec3(dot(x0,x0),dot(x12.xy,x12.xy),dot(x12.zw,x12.zw)),0.0); m=m*m; m=m*m;\n  vec3 x=2.0*fract(p*C.www)-1.0; vec3 h=abs(x)-0.5; vec3 ox=floor(x+0.5); vec3 a0=x-ox;\n  m*=1.79284291400159-0.85373472095314*(a0*a0+h*h);\n  vec3 g; g.x=a0.x*x0.x+h.x*x0.y; g.yz=a0.yz*x12.xz+h.yz*x12.yw;\n  return 130.0*dot(m,g);\n}\nfloat hash(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}\nvec3 ramp(float t){ t=clamp(t,0.0,1.0); return t<0.5?mix(c0,c1,smoothstep(0.0,0.5,t)):mix(c1,c2,smoothstep(0.5,1.0,t)); }\n\nvoid main(){\n  vec2 uv=gl_FragCoord.xy/R; vec2 p=(uv-.5)*vec2(R.x/R.y,1.0); float t=T*.1+S*10.0;\n  vec2 q=vec2(snoise(p*.9+t),snoise(p*.9-t+3.7));\n  float n=snoise(p*.8+q*.8+vec2(t*.5,-t*.3));\n  float v=smoothstep(-.2,.9,n);\n  vec3 col=c0+mix(c1,c2,smoothstep(.3,1.0,n+q.x*.3))*v*.28;\n  col*=.9+.1*sin(gl_FragCoord.y*1.6);\n  col*=1.0-.7*dot(p,p);\n  col+=(hash(gl_FragCoord.xy+T)-.5)/60.0; gl_FragColor=vec4(col,1.0);\n}';
+function sh(t,s){var o=gl.createShader(t);gl.shaderSource(o,s);gl.compileShader(o);return o}
+var pr=gl.createProgram();gl.attachShader(pr,sh(gl.VERTEX_SHADER,VS));gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,FS));gl.linkProgram(pr);
+if(!gl.getProgramParameter(pr,gl.LINK_STATUS)){cv.remove();return}gl.useProgram(pr);
+var b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+var loc=gl.getAttribLocation(pr,'p');gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+var C=[[0.0196, 0.0157, 0.0392],[0.3569, 0.1686, 0.8392],[0.7608, 0.5451, 1.0]],u=function(n){return gl.getUniformLocation(pr,n)};
+gl.uniform3fv(u('c0'),C[0]);gl.uniform3fv(u('c1'),C[1]);gl.uniform3fv(u('c2'),C[2]);gl.uniform1f(u('S'),0.213);
+var mx=0,my=0,t0=performance.now();addEventListener('mousemove',function(e){mx=(e.clientX-innerWidth/2)/innerHeight;my=1});
+function fit(){var d=Math.min(devicePixelRatio||1,1.5)*.75;cv.width=Math.max(2,innerWidth*d|0);cv.height=Math.max(2,innerHeight*d|0);gl.viewport(0,0,cv.width,cv.height)}
+fit();addEventListener('resize',fit);
+(function loop(n){gl.uniform2f(u('R'),cv.width,cv.height);gl.uniform1f(u('T'),(n-t0)/1000);gl.uniform2f(u('M'),mx,my);gl.drawArrays(gl.TRIANGLES,0,3);requestAnimationFrame(loop)})(t0);
+})();</script><div id="__z" style="width:100%;height:100%;display:grid;place-items:center;transform-origin:50% 50%"><div class="area" id="area">
+  <article class="card" id="card">
+    <div class="art">
+      <div class="disc">
+        <span class="label"></span>
+      </div>
+      <span class="track">TRK 04</span>
+    </div>
+    <span class="badge">SIDE A</span>
+    <div class="info">
+      <h3 class="title">Neon Rain</h3>
+      <p>Kaz Takara <span class="dot">&middot;</span> 04:12</p>
+    </div>
+    <div class="barcode">
+      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+    </div>
+    <span class="glare"></span>
+  </article>
+</div>
+</div><div id="__cur" style="position:fixed;left:0;top:0;width:34px;height:34px;pointer-events:none;z-index:2147483647;opacity:0;transform:translate(-100px,-100px);transition:opacity .25s"><svg viewBox="0 0 24 24" width="34" height="34" style="filter:drop-shadow(0 3px 5px rgba(0,0,0,.45))"><path d="M4 2.5v17.2l4.6-4.1 3.1 6.6 3-1.4-3.1-6.5 6.3-.3z" fill="#fff" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+<style>#__rip{position:fixed;width:12px;height:12px;border-radius:50%;border:3px solid rgba(124,92,255,.9);pointer-events:none;z-index:2147483646;transform:translate(-50%,-50%) scale(.2);opacity:0}#__rip.go{animation:__rip .55s ease-out}@keyframes __rip{0%{opacity:.9;transform:translate(-50%,-50%) scale(.3)}100%{opacity:0;transform:translate(-50%,-50%) scale(4.2)}}</style><div id="__rip"></div>
+<script>(function(){var c=document.getElementById('__cur'),r=document.getElementById('__rip');addEventListener('mousemove',function(e){c.style.opacity=1;c.style.transform='translate('+e.clientX+'px,'+e.clientY+'px)'},true);addEventListener('mousedown',function(e){c.firstElementChild.style.transform='scale(.82)';r.style.left=e.clientX+'px';r.style.top=e.clientY+'px';r.classList.remove('go');void r.offsetWidth;r.classList.add('go')},true);addEventListener('mouseup',function(){c.firstElementChild.style.transform='scale(1)'},true)})();</script><script>const area = document.getElementById('area');
+const card = document.getElementById('card');
+const MAX = 12;
+
+area.addEventListener('mousemove', (e) => {
+  const r = card.getBoundingClientRect();
+  const px = (e.clientX - r.left) / r.width;
+  const py = (e.clientY - r.top) / r.height;
+  const cx = Math.max(-0.3, Math.min(1.3, px));
+  const cy = Math.max(-0.3, Math.min(1.3, py));
+  card.classList.add('live');
+  card.style.setProperty('--ry', (cx - 0.5) * MAX *
+    2 + 'deg');
+  card.style.setProperty('--rx', -(cy - 0.5) * MAX *
+    2 + 'deg');
+  card.style.setProperty('--gx', px * 100 + '%');
+  card.style.setProperty('--gy', py * 100 + '%');
+});
+
+area.addEventListener('mouseleave', () => {
+  card.classList.remove('live');
+  card.style.setProperty('--rx', '0deg');
+  card.style.setProperty('--ry', '0deg');
+});
+</script><script>addEventListener('load',function(){setTimeout(function(){var z=document.getElementById('__z'),l=1e9,t=1e9,r=0,b=0;[].forEach.call(z.children,function(e){var x=e.getBoundingClientRect();if(!x.width)return;l=Math.min(l,x.left);t=Math.min(t,x.top);r=Math.max(r,x.right);b=Math.max(b,x.bottom)});var w=r-l,h=b-t;if(w>0&&h>0){var k=Math.max(1,Math.min(1.5,590/w,330/h));z.style.transform='scale('+k.toFixed(3)+')'}},60)})</script></body></html>

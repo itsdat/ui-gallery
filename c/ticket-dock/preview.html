@@ -1,0 +1,149 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><style>*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden}body{display:grid;place-items:center;background:linear-gradient(135deg,#f3ecff 0%,#fdf4fa 55%,#eef6ff 100%);font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;font-feature-settings:'cv11','ss01'}button,input{font-family:inherit}*{-webkit-tap-highlight-color:transparent}button{-webkit-user-select:none;user-select:none}</style><style>:root {
+  --base: 48px;
+  --ink: #111;
+  --paper: #fff7e6;
+  --bar: #fffdf5;
+  --radius: 14px;
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  --spring: cubic-bezier(.34, 1.56, .64, 1);
+  --shadow: 4px 4px 0 var(--ink);
+  --shadow-sm: 2px 2px 0 var(--ink);
+}
+
+.stage {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  background: var(--paper);
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+.dock {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 108px;
+  padding: 0 14px 12px;
+  border-radius: 20px;
+  position: relative;
+  top: 16px;
+  background: var(--bar);
+  border: 2.5px solid var(--ink);
+  box-shadow: var(--shadow), inset 0 1px 0 #fff;
+}
+
+.it {
+  position: relative;
+  width: var(--base);
+  height: var(--base);
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius);
+  background: linear-gradient(145deg, var(--g1), var(--g2));
+  border: 2px solid var(--ink);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255, 255, 255, .55);
+  transition: transform .16s var(--ease), box-shadow .16s var(--ease), filter .16s var(--ease);
+}
+
+.it:focus-visible {
+  outline: 2.5px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.it:active {
+  transform: scale(.95);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+.ico {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--ink);
+  text-transform: uppercase;
+  line-height: 1;
+  letter-spacing: -.02em;
+  user-select: none;
+}
+
+.tip {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  padding: 5px 10px;
+  border-radius: 8px;
+  white-space: nowrap;
+  font: 800 11px/1.2 system-ui, sans-serif;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: #fff;
+  border: 2px solid var(--ink);
+  box-shadow: var(--shadow-sm);
+  opacity: 0;
+  transform: translate(-50%, 6px) scale(.9);
+  transition: opacity .2s var(--ease), transform .3s var(--spring);
+  pointer-events: none;
+}
+
+.it.on .tip {
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .it:hover {
+    filter: brightness(1.06) saturate(1.05);
+  }
+}
+</style></head><body><div id="__z" style="width:100%;height:100%;display:grid;place-items:center;transform-origin:50% 50%"><div class="stage">
+  <nav class="dock" id="dock" aria-label="Ticket booking dock">
+    <a class="it" style="--g1:#ffd60a;--g2:#ffc300"><span class="tip">Movies</span><span class="ico">M</span></a>
+    <a class="it" style="--g1:#ff5d73;--g2:#ff3b5c"><span class="tip">Concerts</span><span class="ico">C</span></a>
+    <a class="it" style="--g1:#3ddc97;--g2:#2bc47e"><span class="tip">Theater</span><span class="ico">T</span></a>
+    <a class="it" style="--g1:#4dabf7;--g2:#3b8ee0"><span class="tip">Sports</span><span class="ico">S</span></a>
+    <a class="it" style="--g1:#ffd60a;--g2:#ffc300"><span class="tip">Events</span><span class="ico">E</span></a>
+    <a class="it" style="--g1:#ff5d73;--g2:#ff3b5c"><span class="tip">Offers</span><span class="ico">O</span></a>
+    <a class="it" style="--g1:#3ddc97;--g2:#2bc47e"><span class="tip">Tickets</span><span class="ico">B</span></a>
+  </nav>
+</div>
+</div><div id="__cur" style="position:fixed;left:0;top:0;width:34px;height:34px;pointer-events:none;z-index:2147483647;opacity:0;transform:translate(-100px,-100px);transition:opacity .25s"><svg viewBox="0 0 24 24" width="34" height="34" style="filter:drop-shadow(0 3px 5px rgba(0,0,0,.45))"><path d="M4 2.5v17.2l4.6-4.1 3.1 6.6 3-1.4-3.1-6.5 6.3-.3z" fill="#fff" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+<style>#__rip{position:fixed;width:12px;height:12px;border-radius:50%;border:3px solid rgba(124,92,255,.9);pointer-events:none;z-index:2147483646;transform:translate(-50%,-50%) scale(.2);opacity:0}#__rip.go{animation:__rip .55s ease-out}@keyframes __rip{0%{opacity:.9;transform:translate(-50%,-50%) scale(.3)}100%{opacity:0;transform:translate(-50%,-50%) scale(4.2)}}</style><div id="__rip"></div>
+<script>(function(){var c=document.getElementById('__cur'),r=document.getElementById('__rip');addEventListener('mousemove',function(e){c.style.opacity=1;c.style.transform='translate('+e.clientX+'px,'+e.clientY+'px)'},true);addEventListener('mousedown',function(e){c.firstElementChild.style.transform='scale(.82)';r.style.left=e.clientX+'px';r.style.top=e.clientY+'px';r.classList.remove('go');void r.offsetWidth;r.classList.add('go')},true);addEventListener('mouseup',function(){c.firstElementChild.style.transform='scale(1)'},true)})();</script><script>const dock = document.getElementById('dock');
+const items = [...dock.querySelectorAll('.it')];
+const BASE = 48,
+  GAIN = 44,
+  SPREAD = 78;
+
+function set(x) {
+  let hot = null,
+    best = 1e9;
+  items.forEach((el) => {
+    el.style.transition = 'none';
+    const r = el.getBoundingClientRect();
+    const d = x == null ? 1e3 : Math.abs(x - (r.left +
+      r.width / 2));
+    const size = BASE + GAIN * Math.exp(-(d * d) / (
+      2 * SPREAD * SPREAD));
+    el.style.width = el.style.height = size + 'px';
+    if (d < best) {
+      best = d;
+      hot = el;
+    }
+  });
+  items.forEach((el) => el.classList.toggle('on', el ===
+    hot && best < 40));
+}
+
+dock.addEventListener('mousemove', (e) => set(e.clientX));
+dock.addEventListener('mouseleave', () => {
+  items.forEach((el) => {
+    el.style.transition =
+      'width .35s cubic-bezier(.2,.8,.2,1), height .35s cubic-bezier(.2,.8,.2,1)';
+    el.style.width = el.style.height = '';
+    el.classList.remove('on');
+  });
+});
+</script><script>addEventListener('load',function(){setTimeout(function(){var z=document.getElementById('__z'),l=1e9,t=1e9,r=0,b=0;[].forEach.call(z.children,function(e){var x=e.getBoundingClientRect();if(!x.width)return;l=Math.min(l,x.left);t=Math.min(t,x.top);r=Math.max(r,x.right);b=Math.max(b,x.bottom)});var w=r-l,h=b-t;if(w>0&&h>0){var k=Math.max(1,Math.min(1.5,590/w,330/h));z.style.transform='scale('+k.toFixed(3)+')'}},60)})</script></body></html>

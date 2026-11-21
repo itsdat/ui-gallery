@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Clay Orbit Button — UI Components</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ticket Dock — UI Components</title>
 <meta property="og:image" content="thumb.jpg"><style>:root{--bg:#0f0e13;--c:#19181e;--c2:#131217;--b:#26252d;--t:#f4f3f7;--m:#8d8c98;--a:#b79ae6;--glow:rgba(139,92,246,.28)}*{box-sizing:border-box}
 html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--t);font:15px/1.5 "Geist",Inter,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}
 .wrap{max-width:1180px;margin:0 auto;padding:34px 24px 90px}
@@ -30,206 +30,171 @@ html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--t);fo
 pre{margin:0;background:var(--c2);border:1px solid var(--b);border-radius:18px;padding:18px;overflow:auto;max-height:560px;font:12.5px/1.65 ui-monospace,"SF Mono",Menlo,Consolas,monospace;color:#cfcdda}
 .cap{white-space:pre-line;color:var(--m);background:var(--c);border:1px solid var(--b);border-radius:16px;padding:16px;margin-top:6px;font-size:14px}
 @media(max-width:860px){.two{grid-template-columns:1fr}}</style></head><body><div class="wrap"><a class="back" href="../../">← UI Components</a>
-<h1>Clay Orbit Button</h1><p class="sub">Buttons · A soft clay spark orbits the rim, speeding up on hover</p>
-<div class="two"><div><div class="panel"><div class="sb" id="sb"><iframe src="preview.html" title="Live demo"></iframe></div></div><div class="row"><a class="btn" href="clay-orbit-button.zip" download>Download code (.zip)</a><a class="btn ghost" href="reel.mp4">▶ Watch reel</a><button class="btn ghost" id="cp">Copy code</button></div>
-<div class="cap">A soft clay spark orbits the button rim 🍡 Hover and it speeds up, click and it flips to &#x27;You&#x27;re safe&#x27;. Which accent would you pick next? 👇
+<h1>Ticket Dock</h1><p class="sub">Micro · Brutalist dock that magnifies icons by cursor distance</p>
+<div class="two"><div><div class="panel"><div class="sb" id="sb"><iframe src="preview.html" title="Live demo"></iframe></div></div><div class="row"><a class="btn" href="ticket-dock.zip" download>Download code (.zip)</a><a class="btn ghost" href="reel.mp4">▶ Watch reel</a><button class="btn ghost" id="cp">Copy code</button></div>
+<div class="cap">Brutalist dock for ticket booking — hover to feel the pull. 🎟️
+Icons scale smoothly by distance, neighbours follow.
+Save for your next UI project.
+#uidesign #microinteraction #css
 
-#webdev #css #uianimation #microinteractions #frontend #creativedev</div></div>
+#webdev #css #uidesign #microinteraction #frontend #ticketbooking</div></div>
 <div><div class="tabs"><button class="on" data-k="html">HTML</button><button data-k="css">CSS</button><button data-k="js">JS</button></div><pre id="p-html" style="display:block">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
 &lt;head&gt;
   &lt;meta charset=&quot;UTF-8&quot;&gt;
   &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
-  &lt;title&gt;Clay Orbit Button&lt;/title&gt;
+  &lt;title&gt;Ticket Dock&lt;/title&gt;
   &lt;link rel=&quot;stylesheet&quot; href=&quot;app.css&quot;&gt;
 &lt;/head&gt;
 &lt;body&gt;
-  &lt;div class=&quot;wrap&quot;&gt;
-    &lt;button class=&quot;ob&quot; id=&quot;ob&quot; type=&quot;button&quot;&gt;
-      &lt;span class=&quot;in&quot;&gt;
-        &lt;span class=&quot;lbl l1&quot;&gt;Run drill&lt;/span&gt;
-        &lt;span class=&quot;lbl l2&quot;&gt;
-          &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5.5 12.5l4.2 4.2L18.5 8&quot;/&gt;&lt;/svg&gt;
-          You&#x27;re safe
-        &lt;/span&gt;
-        &lt;svg class=&quot;arr&quot; viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5 12h14M13 6l6 6-6 6&quot;/&gt;&lt;/svg&gt;
-      &lt;/span&gt;
-    &lt;/button&gt;
+  &lt;div class=&quot;stage&quot;&gt;
+    &lt;nav class=&quot;dock&quot; id=&quot;dock&quot; aria-label=&quot;Ticket booking dock&quot;&gt;
+      &lt;a class=&quot;it&quot; style=&quot;--g1:#ffd60a;--g2:#ffc300&quot;&gt;&lt;span class=&quot;tip&quot;&gt;Movies&lt;/span&gt;&lt;span class=&quot;ico&quot;&gt;M&lt;/span&gt;&lt;/a&gt;
+      &lt;a class=&quot;it&quot; style=&quot;--g1:#ff5d73;--g2:#ff3b5c&quot;&gt;&lt;span class=&quot;tip&quot;&gt;Concerts&lt;/span&gt;&lt;span class=&quot;ico&quot;&gt;C&lt;/span&gt;&lt;/a&gt;
+      &lt;a class=&quot;it&quot; style=&quot;--g1:#3ddc97;--g2:#2bc47e&quot;&gt;&lt;span class=&quot;tip&quot;&gt;Theater&lt;/span&gt;&lt;span class=&quot;ico&quot;&gt;T&lt;/span&gt;&lt;/a&gt;
+      &lt;a class=&quot;it&quot; style=&quot;--g1:#4dabf7;--g2:#3b8ee0&quot;&gt;&lt;span class=&quot;tip&quot;&gt;Sports&lt;/span&gt;&lt;span class=&quot;ico&quot;&gt;S&lt;/span&gt;&lt;/a&gt;
+      &lt;a class=&quot;it&quot; style=&quot;--g1:#ffd60a;--g2:#ffc300&quot;&gt;&lt;span class=&quot;tip&quot;&gt;Events&lt;/span&gt;&lt;span class=&quot;ico&quot;&gt;E&lt;/span&gt;&lt;/a&gt;
+      &lt;a class=&quot;it&quot; style=&quot;--g1:#ff5d73;--g2:#ff3b5c&quot;&gt;&lt;span class=&quot;tip&quot;&gt;Offers&lt;/span&gt;&lt;span class=&quot;ico&quot;&gt;O&lt;/span&gt;&lt;/a&gt;
+      &lt;a class=&quot;it&quot; style=&quot;--g1:#3ddc97;--g2:#2bc47e&quot;&gt;&lt;span class=&quot;tip&quot;&gt;Tickets&lt;/span&gt;&lt;span class=&quot;ico&quot;&gt;B&lt;/span&gt;&lt;/a&gt;
+    &lt;/nav&gt;
   &lt;/div&gt;
   &lt;script src=&quot;app.js&quot;&gt;&lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;
-</pre><pre id="p-css" style="display:none">@property --ang {
-  syntax: &#x27;&lt;angle&gt;&#x27;;
-  inherits: false;
-  initial-value: 0deg;
-}
-
-:root {
-  --bg: #f6f1ec;
-  --fg: #3d2b26;
-  --muted: #8a7168;
-  --accent: #ff7a59;
-  --accent-soft: #ffd6e0;
-  --radius: 30px;
+</pre><pre id="p-css" style="display:none">:root {
+  --base: 48px;
+  --ink: #111;
+  --paper: #fff7e6;
+  --bar: #fffdf5;
+  --radius: 14px;
   --ease: cubic-bezier(.2, .8, .2, 1);
   --spring: cubic-bezier(.34, 1.56, .64, 1);
-  --shadow: 0 2px 4px rgba(61, 43, 38, .06), 0 14px 28px rgba(61, 43, 38, .12);
+  --shadow: 4px 4px 0 var(--ink);
+  --shadow-sm: 2px 2px 0 var(--ink);
 }
 
-.wrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.stage {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  background: var(--paper);
   font-family: system-ui, -apple-system, &#x27;Segoe UI&#x27;, sans-serif;
 }
 
-.ob {
-  --spd: 3s;
-  position: relative;
-  padding: 2px;
-  border: 0;
-  border-radius: var(--radius);
-  cursor: pointer;
-  isolation: isolate;
-  background: conic-gradient(from var(--ang), rgba(255, 255, 255, .5) 0 52%, var(--accent) 74%, #fff 88%, rgba(255, 255, 255, .5) 100%);
-  animation: spin var(--spd) linear infinite;
-  box-shadow: var(--shadow);
-  transition: transform .35s var(--spring), box-shadow .4s var(--ease);
-}
-
-.ob::before {
-  content: &quot;&quot;;
-  position: absolute;
-  inset: -2px;
-  z-index: -1;
-  border-radius: inherit;
-  filter: blur(14px);
-  opacity: .35;
-  transition: opacity .4s var(--ease);
-  background: conic-gradient(from var(--ang), transparent 0 52%, var(--accent) 78%, #ffb9a3 90%, transparent 100%);
-}
-
-@keyframes spin {
-  to {
-    --ang: 360deg;
-  }
-}
-
-.ob:hover {
-  --spd: 1.2s;
-  transform: translateY(-2px);
-  box-shadow: 0 2px 4px rgba(61, 43, 38, .08), 0 20px 36px rgba(61, 43, 38, .18);
-}
-
-.ob:hover::before {
-  opacity: .65;
-}
-
-.ob:active {
-  transform: scale(.94);
-}
-
-.ob:focus-visible {
-  outline: 3px solid var(--accent);
-  outline-offset: 4px;
-}
-
-.in {
-  position: relative;
+.dock {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  height: 56px;
-  padding: 0 28px;
-  border-radius: 28px;
-  overflow: hidden;
-  color: var(--fg);
-  background: radial-gradient(120% 140% at 50% 0%, #fdf6f1, #f2e6de);
-  font-size: 15px;
-  font-weight: 650;
-  letter-spacing: .02em;
-  box-shadow: inset -6px -6px 12px rgba(61, 43, 38, .08), inset 6px 6px 12px rgba(255, 255, 255, .8);
-  transition: background .4s var(--ease);
-}
-
-.ob:hover .in {
-  background: radial-gradient(120% 140% at 50% 0%, #fffaf6, #f8ebe3);
-}
-
-.lbl {
-  display: flex;
-  align-items: center;
+  align-items: flex-end;
   gap: 8px;
-  transition: transform .5s var(--ease), opacity .3s var(--ease);
+  height: 108px;
+  padding: 0 14px 12px;
+  border-radius: 20px;
+  position: relative;
+  top: 16px;
+  background: var(--bar);
+  border: 2.5px solid var(--ink);
+  box-shadow: var(--shadow), inset 0 1px 0 #fff;
 }
 
-.l2 {
+.it {
+  position: relative;
+  width: var(--base);
+  height: var(--base);
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius);
+  background: linear-gradient(145deg, var(--g1), var(--g2));
+  border: 2px solid var(--ink);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255, 255, 255, .55);
+  transition: transform .16s var(--ease), box-shadow .16s var(--ease), filter .16s var(--ease);
+}
+
+.it:focus-visible {
+  outline: 2.5px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.it:active {
+  transform: scale(.95);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+.ico {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--ink);
+  text-transform: uppercase;
+  line-height: 1;
+  letter-spacing: -.02em;
+  user-select: none;
+}
+
+.tip {
   position: absolute;
-  inset: 0;
-  justify-content: center;
-  transform: translateY(150%);
+  bottom: calc(100% + 12px);
+  left: 50%;
+  padding: 5px 10px;
+  border-radius: 8px;
+  white-space: nowrap;
+  font: 800 11px/1.2 system-ui, sans-serif;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: #fff;
+  border: 2px solid var(--ink);
+  box-shadow: var(--shadow-sm);
   opacity: 0;
-  color: #1f8a5b;
+  transform: translate(-50%, 6px) scale(.9);
+  transition: opacity .2s var(--ease), transform .3s var(--spring);
+  pointer-events: none;
 }
 
-.l2 svg {
-  width: 18px;
-  height: 18px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.arr {
-  width: 18px;
-  height: 18px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  transition: transform .4s var(--spring), opacity .3s var(--ease);
-}
-
-.ob:hover .arr {
-  transform: translateX(5px);
-}
-
-.ob.done .l1 {
-  transform: translateY(-150%);
-  opacity: 0;
-}
-
-.ob.done .l2 {
-  transform: none;
+.it.on .tip {
   opacity: 1;
+  transform: translate(-50%, 0) scale(1);
 }
 
-.ob.done .arr {
-  opacity: 0;
-  transform: scale(.5);
-}
-
-@media (prefers-reduced-motion: reduce) {
-
-  .ob,
-  .ob::before {
-    animation: none;
+@media (hover: hover) and (pointer: fine) {
+  .it:hover {
+    filter: brightness(1.06) saturate(1.05);
   }
 }
-</pre><pre id="p-js" style="display:none">const ob = document.getElementById(&#x27;ob&#x27;);
-let timer;
+</pre><pre id="p-js" style="display:none">const dock = document.getElementById(&#x27;dock&#x27;);
+const items = [...dock.querySelectorAll(&#x27;.it&#x27;)];
+const BASE = 48,
+  GAIN = 44,
+  SPREAD = 78;
 
-ob.addEventListener(&#x27;click&#x27;, () =&gt; {
-  ob.classList.toggle(&#x27;done&#x27;);
-  clearTimeout(timer);
-  if (ob.classList.contains(&#x27;done&#x27;)) {
-    timer = setTimeout(() =&gt; ob.classList.remove(
-      &#x27;done&#x27;), 2600);
-  }
+function set(x) {
+  let hot = null,
+    best = 1e9;
+  items.forEach((el) =&gt; {
+    el.style.transition = &#x27;none&#x27;;
+    const r = el.getBoundingClientRect();
+    const d = x == null ? 1e3 : Math.abs(x - (r.left +
+      r.width / 2));
+    const size = BASE + GAIN * Math.exp(-(d * d) / (
+      2 * SPREAD * SPREAD));
+    el.style.width = el.style.height = size + &#x27;px&#x27;;
+    if (d &lt; best) {
+      best = d;
+      hot = el;
+    }
+  });
+  items.forEach((el) =&gt; el.classList.toggle(&#x27;on&#x27;, el ===
+    hot &amp;&amp; best &lt; 40));
+}
+
+dock.addEventListener(&#x27;mousemove&#x27;, (e) =&gt; set(e.clientX));
+dock.addEventListener(&#x27;mouseleave&#x27;, () =&gt; {
+  items.forEach((el) =&gt; {
+    el.style.transition =
+      &#x27;width .35s cubic-bezier(.2,.8,.2,1), height .35s cubic-bezier(.2,.8,.2,1)&#x27;;
+    el.style.width = el.style.height = &#x27;&#x27;;
+    el.classList.remove(&#x27;on&#x27;);
+  });
 });
 </pre></div></div></div>
 <script>var sb=document.getElementById('sb');function fit(){sb.firstChild.style.transform='scale('+sb.clientWidth/660+')'}fit();addEventListener('resize',fit);var k='html';[].forEach.call(document.querySelectorAll('.tabs button'),function(b){b.onclick=function(){k=b.dataset.k;[].forEach.call(document.querySelectorAll('.tabs button'),function(x){x.classList.toggle('on',x===b)});['html','css','js'].forEach(function(n){document.getElementById('p-'+n).style.display=n===k?'block':'none'})}});
