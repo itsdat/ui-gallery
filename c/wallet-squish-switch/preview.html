@@ -1,0 +1,159 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><style>*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden}body{display:grid;place-items:center;background:linear-gradient(135deg,#f3ecff 0%,#fdf4fa 55%,#eef6ff 100%);font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;font-feature-settings:'cv11','ss01'}button,input{font-family:inherit}*{-webkit-tap-highlight-color:transparent}button{-webkit-user-select:none;user-select:none}</style><style>:root {
+  --bg: #e6eaf2;
+  --fg: #4b5563;
+  --muted: #8a93a6;
+  --accent: #6c8cff;
+  --radius: 22px;
+  --shadow: 8px 8px 18px #c5cad6, -8px -8px 18px #ffffff;
+  --ease: cubic-bezier(.2, .8, .2, 1);
+}
+
+.row {
+  display: inline-flex;
+  align-items: center;
+  gap: 24px;
+  color: var(--fg);
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+.ss {
+  --w: 152px;
+  --h: 72px;
+  --inset: 8px;
+  --thumb: 56px;
+  --track: #dde3ee;
+  --thumb-c: #eef1f7;
+  position: relative;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  border-radius: 40px;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform .18s var(--ease);
+}
+
+.ss:active {
+  transform: scale(.97);
+}
+
+.ss:focus-visible .track {
+  box-shadow: var(--shadow), 0 0 0 3px rgba(108, 140, 255, .45);
+}
+
+.track {
+  position: relative;
+  display: block;
+  width: var(--w);
+  height: var(--h);
+  border-radius: 36px;
+  background: var(--track);
+  box-shadow: inset 4px 4px 9px #c5cad6, inset -4px -4px 9px #ffffff;
+  transition: background-color .32s var(--ease), box-shadow .32s var(--ease);
+}
+
+.ss[aria-checked='true'] .track {
+  background: var(--accent);
+  box-shadow: inset 4px 4px 10px rgba(40, 62, 140, .35), inset -4px -4px 10px rgba(255, 255, 255, .28);
+}
+
+.thumb {
+  position: absolute;
+  top: var(--inset);
+  left: 0;
+  width: var(--thumb);
+  height: var(--thumb);
+  border-radius: 28px;
+  background: var(--thumb-c);
+  box-shadow: 5px 5px 12px #c5cad6, -5px -5px 12px #ffffff, inset 0 1px 0 rgba(255, 255, 255, .9);
+  transition: background-color .32s var(--ease), box-shadow .32s var(--ease);
+  will-change: transform;
+}
+
+.ss[aria-checked='true'] .thumb {
+  background: #f6f8ff;
+  box-shadow: 4px 4px 10px rgba(40, 62, 140, .28), -4px -4px 10px rgba(255, 255, 255, .35), inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+.name {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -.01em;
+  color: var(--fg);
+  cursor: pointer;
+  user-select: none;
+  transition: color .32s var(--ease);
+}
+
+.ss[aria-checked='true']~.name {
+  color: #3f4a5c;
+}
+</style></head><body><div id="__z" style="width:100%;height:100%;display:grid;place-items:center;transform-origin:50% 50%"><div class="row">
+  <button class="ss" id="ss" type="button" role="switch" aria-checked="false" aria-label="Auto top-up">
+    <span class="track">
+      <span class="thumb"></span>
+    </span>
+  </button>
+  <label class="name" for="ss">Auto top-up</label>
+</div>
+</div><div id="__cur" style="position:fixed;left:0;top:0;width:34px;height:34px;pointer-events:none;z-index:2147483647;opacity:0;transform:translate(-100px,-100px);transition:opacity .25s"><svg viewBox="0 0 24 24" width="34" height="34" style="filter:drop-shadow(0 3px 5px rgba(0,0,0,.45))"><path d="M4 2.5v17.2l4.6-4.1 3.1 6.6 3-1.4-3.1-6.5 6.3-.3z" fill="#fff" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+<style>#__rip{position:fixed;width:12px;height:12px;border-radius:50%;border:3px solid rgba(124,92,255,.9);pointer-events:none;z-index:2147483646;transform:translate(-50%,-50%) scale(.2);opacity:0}#__rip.go{animation:__rip .55s ease-out}@keyframes __rip{0%{opacity:.9;transform:translate(-50%,-50%) scale(.3)}100%{opacity:0;transform:translate(-50%,-50%) scale(4.2)}}</style><div id="__rip"></div>
+<script>(function(){var c=document.getElementById('__cur'),r=document.getElementById('__rip');addEventListener('mousemove',function(e){c.style.opacity=1;c.style.transform='translate('+e.clientX+'px,'+e.clientY+'px)'},true);addEventListener('mousedown',function(e){c.firstElementChild.style.transform='scale(.82)';r.style.left=e.clientX+'px';r.style.top=e.clientY+'px';r.classList.remove('go');void r.offsetWidth;r.classList.add('go')},true);addEventListener('mouseup',function(){c.firstElementChild.style.transform='scale(1)'},true)})();</script><script>const btn = document.getElementById('ss');
+const thumb = btn.querySelector('.thumb');
+const MIN = 8;
+const MAX = 152 - 8 - 56;
+let x = MIN,
+  v = 0,
+  target = MIN,
+  flow = 0;
+let swell = 1,
+  swellT = 1,
+  last = 0,
+  running = false;
+
+function frame(now) {
+  const dt = Math.min(0.032, (now - last) / 1000 ||
+  0.016);
+  last = now;
+  const a = (-170 * (x - target) - 21.5 * v) / 0.9;
+  v += a * dt;
+  x += v * dt;
+  flow += (v - flow) * Math.min(1, dt * 14);
+  swell += (swellT - swell) * Math.min(1, dt * 18);
+  const s = 1 + Math.min(0.4, Math.abs(flow) / 600) *
+  0.36;
+  thumb.style.transform =
+    `translateX(${x.toFixed(2)}px) scale(${(s * swell).toFixed(3)}, ${(swell / s).toFixed(3)})`;
+  if (Math.abs(v) > 0.05 || Math.abs(x - target) > 0.05 ||
+    Math.abs(swell - swellT) > 0.001)
+    requestAnimationFrame(frame);
+  else running = false;
+}
+
+function kick() {
+  if (!running) {
+    running = true;
+    last = performance.now();
+    requestAnimationFrame(frame);
+  }
+}
+
+btn.addEventListener('click', () => {
+  const on = btn.getAttribute('aria-checked') !==
+    'true';
+  btn.setAttribute('aria-checked', on);
+  target = on ? MAX : MIN;
+  kick();
+});
+btn.addEventListener('pointerenter', () => {
+  swellT = 1.035;
+  kick();
+});
+btn.addEventListener('pointerleave', () => {
+  swellT = 1;
+  kick();
+});
+
+thumb.style.transform = `translateX(${MIN}px)`;
+</script><script>addEventListener('load',function(){setTimeout(function(){var z=document.getElementById('__z'),l=1e9,t=1e9,r=0,b=0;[].forEach.call(z.children,function(e){var x=e.getBoundingClientRect();if(!x.width)return;l=Math.min(l,x.left);t=Math.min(t,x.top);r=Math.max(r,x.right);b=Math.max(b,x.bottom)});var w=r-l,h=b-t;if(w>0&&h>0){var k=Math.max(1,Math.min(1.5,590/w,330/h));z.style.transform='scale('+k.toFixed(3)+')'}},60)})</script></body></html>

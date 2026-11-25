@@ -1,0 +1,208 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Wallet Squish Switch — UI Components</title>
+<meta property="og:image" content="thumb.jpg"><style>:root{--bg:#0f0e13;--c:#19181e;--c2:#131217;--b:#26252d;--t:#f4f3f7;--m:#8d8c98;--a:#b79ae6;--glow:rgba(139,92,246,.28)}*{box-sizing:border-box}
+html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--t);font:15px/1.5 "Geist",Inter,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding:34px 24px 90px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:26px}h1{font-size:30px;font-weight:700;letter-spacing:-.025em;margin:0}
+.tools{display:flex;gap:10px;flex-wrap:wrap}.sr{position:relative}.sr svg{position:absolute;left:12px;top:50%;margin-top:-8px;width:16px;height:16px;stroke:var(--m);fill:none;stroke-width:2;stroke-linecap:round}
+.sr input,.sel{background:var(--c);border:1px solid var(--b);color:var(--t);border-radius:12px;height:40px;padding:0 14px;font:inherit;font-size:14px;outline:none}
+.sr input{padding-left:36px;width:200px}.sel{appearance:none;-webkit-appearance:none;padding-right:34px;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238d8c98' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+.sr input:focus,.sel:focus{border-color:#4a4658}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.card{position:relative;display:block;background:var(--c);border:1px solid var(--b);border-radius:20px;padding:6px 6px 14px;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s,border-color .35s}
+.card:hover{transform:translateY(-3px);border-color:#3a3646;box-shadow:0 22px 50px -22px var(--glow),-10px 14px 40px -26px var(--glow)}
+.thumb{position:relative;border-radius:15px;overflow:hidden;background:var(--c2);aspect-ratio:660/380}.thumb img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.card:hover .thumb img{transform:scale(1.035)}
+.new{position:absolute;left:10px;top:10px;padding:4px 9px;border-radius:7px;background:rgba(139,92,246,.28);color:#d9c8ff;font-size:10.5px;font-weight:700;letter-spacing:.1em;backdrop-filter:blur(6px)}
+.heart{position:absolute;right:10px;top:10px;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:rgba(15,14,19,.7);border:1px solid rgba(255,255,255,.1);opacity:0;transform:translateY(-4px);transition:.25s;cursor:pointer;backdrop-filter:blur(6px)}
+.heart svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2;stroke-linejoin:round;transition:.2s}.card:hover .heart,.heart.on{opacity:1;transform:none}.heart.on svg{fill:#ff6b9a;stroke:#ff6b9a}
+.meta{padding:13px 12px 0}.meta b{display:block;font-size:15.5px;font-weight:600;letter-spacing:-.01em;transition:color .25s}.card:hover .meta b{color:var(--a)}
+.meta small{display:block;margin-top:3px;font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--m)}
+.empty{color:var(--m);padding:60px 0;text-align:center}
+.up{position:fixed;right:22px;bottom:22px;width:44px;height:44px;border-radius:13px;background:var(--c);border:1px solid var(--b);color:var(--t);display:grid;place-items:center;cursor:pointer;opacity:0;pointer-events:none;transition:.3s}.up.show{opacity:1;pointer-events:auto}.up:hover{border-color:#4a4658}
+.up svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.back{display:inline-flex;align-items:center;gap:6px;margin-bottom:20px;color:var(--m);font-size:14px}.back:hover{color:var(--t)}
+.two{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:22px}.two>div{min-width:0}.sub{color:var(--m);margin:6px 0 26px}
+.panel{background:var(--c);border:1px solid var(--b);border-radius:20px;padding:6px}
+.sb{position:relative;aspect-ratio:660/380;overflow:hidden;border-radius:15px;background:#000}.sb iframe{position:absolute;left:0;top:0;width:660px;height:380px;border:0;transform-origin:0 0}
+.btn{display:inline-flex;align-items:center;gap:8px;background:#f4f3f7;color:#0f0e13;padding:0 18px;height:42px;border-radius:12px;font-weight:600;border:0;cursor:pointer;font:inherit;font-weight:600;font-size:14px;transition:.2s}.btn:hover{background:#fff;transform:translateY(-1px)}
+.ghost{background:var(--c);border:1px solid var(--b);color:var(--t)}.ghost:hover{background:#201f26}.row{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
+.tabs{display:flex;gap:6px;margin-bottom:10px}.tabs button{background:var(--c);border:1px solid var(--b);color:var(--m);height:34px;padding:0 15px;border-radius:10px;cursor:pointer;font:inherit;font-size:13.5px}.tabs .on{background:#f4f3f7;border-color:#f4f3f7;color:#0f0e13;font-weight:600}
+pre{margin:0;background:var(--c2);border:1px solid var(--b);border-radius:18px;padding:18px;overflow:auto;max-height:560px;font:12.5px/1.65 ui-monospace,"SF Mono",Menlo,Consolas,monospace;color:#cfcdda}
+.cap{white-space:pre-line;color:var(--m);background:var(--c);border:1px solid var(--b);border-radius:16px;padding:16px;margin-top:6px;font-size:14px}
+@media(max-width:860px){.two{grid-template-columns:1fr}}</style></head><body><div class="wrap"><a class="back" href="../../">← UI Components</a>
+<h1>Wallet Squish Switch</h1><p class="sub">Micro · Spring-driven pill that stretches as it travels</p>
+<div class="two"><div><div class="panel"><div class="sb" id="sb"><iframe src="preview.html" title="Live demo"></iframe></div></div><div class="row"><a class="btn" href="wallet-squish-switch.zip" download>Download code (.zip)</a><a class="btn ghost" href="reel.mp4">▶ Watch reel</a><button class="btn ghost" id="cp">Copy code</button></div>
+<div class="cap">The switch that stretches as it travels 🟢 A damped spring drives the thumb, so it squishes while flying and settles back to rest. Save this for your next toggle. Would you ship it?
+
+#webdev #css #javascript #uianimation #microinteractions #frontend</div></div>
+<div><div class="tabs"><button class="on" data-k="html">HTML</button><button data-k="css">CSS</button><button data-k="js">JS</button></div><pre id="p-html" style="display:block">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;title&gt;Wallet Squish Switch&lt;/title&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;app.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class=&quot;row&quot;&gt;
+    &lt;button class=&quot;ss&quot; id=&quot;ss&quot; type=&quot;button&quot; role=&quot;switch&quot; aria-checked=&quot;false&quot; aria-label=&quot;Auto top-up&quot;&gt;
+      &lt;span class=&quot;track&quot;&gt;
+        &lt;span class=&quot;thumb&quot;&gt;&lt;/span&gt;
+      &lt;/span&gt;
+    &lt;/button&gt;
+    &lt;label class=&quot;name&quot; for=&quot;ss&quot;&gt;Auto top-up&lt;/label&gt;
+  &lt;/div&gt;
+  &lt;script src=&quot;app.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre><pre id="p-css" style="display:none">:root {
+  --bg: #e6eaf2;
+  --fg: #4b5563;
+  --muted: #8a93a6;
+  --accent: #6c8cff;
+  --radius: 22px;
+  --shadow: 8px 8px 18px #c5cad6, -8px -8px 18px #ffffff;
+  --ease: cubic-bezier(.2, .8, .2, 1);
+}
+
+.row {
+  display: inline-flex;
+  align-items: center;
+  gap: 24px;
+  color: var(--fg);
+  font-family: system-ui, -apple-system, &#x27;Segoe UI&#x27;, sans-serif;
+}
+
+.ss {
+  --w: 152px;
+  --h: 72px;
+  --inset: 8px;
+  --thumb: 56px;
+  --track: #dde3ee;
+  --thumb-c: #eef1f7;
+  position: relative;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  border-radius: 40px;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform .18s var(--ease);
+}
+
+.ss:active {
+  transform: scale(.97);
+}
+
+.ss:focus-visible .track {
+  box-shadow: var(--shadow), 0 0 0 3px rgba(108, 140, 255, .45);
+}
+
+.track {
+  position: relative;
+  display: block;
+  width: var(--w);
+  height: var(--h);
+  border-radius: 36px;
+  background: var(--track);
+  box-shadow: inset 4px 4px 9px #c5cad6, inset -4px -4px 9px #ffffff;
+  transition: background-color .32s var(--ease), box-shadow .32s var(--ease);
+}
+
+.ss[aria-checked=&#x27;true&#x27;] .track {
+  background: var(--accent);
+  box-shadow: inset 4px 4px 10px rgba(40, 62, 140, .35), inset -4px -4px 10px rgba(255, 255, 255, .28);
+}
+
+.thumb {
+  position: absolute;
+  top: var(--inset);
+  left: 0;
+  width: var(--thumb);
+  height: var(--thumb);
+  border-radius: 28px;
+  background: var(--thumb-c);
+  box-shadow: 5px 5px 12px #c5cad6, -5px -5px 12px #ffffff, inset 0 1px 0 rgba(255, 255, 255, .9);
+  transition: background-color .32s var(--ease), box-shadow .32s var(--ease);
+  will-change: transform;
+}
+
+.ss[aria-checked=&#x27;true&#x27;] .thumb {
+  background: #f6f8ff;
+  box-shadow: 4px 4px 10px rgba(40, 62, 140, .28), -4px -4px 10px rgba(255, 255, 255, .35), inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+.name {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -.01em;
+  color: var(--fg);
+  cursor: pointer;
+  user-select: none;
+  transition: color .32s var(--ease);
+}
+
+.ss[aria-checked=&#x27;true&#x27;]~.name {
+  color: #3f4a5c;
+}
+</pre><pre id="p-js" style="display:none">const btn = document.getElementById(&#x27;ss&#x27;);
+const thumb = btn.querySelector(&#x27;.thumb&#x27;);
+const MIN = 8;
+const MAX = 152 - 8 - 56;
+let x = MIN,
+  v = 0,
+  target = MIN,
+  flow = 0;
+let swell = 1,
+  swellT = 1,
+  last = 0,
+  running = false;
+
+function frame(now) {
+  const dt = Math.min(0.032, (now - last) / 1000 ||
+  0.016);
+  last = now;
+  const a = (-170 * (x - target) - 21.5 * v) / 0.9;
+  v += a * dt;
+  x += v * dt;
+  flow += (v - flow) * Math.min(1, dt * 14);
+  swell += (swellT - swell) * Math.min(1, dt * 18);
+  const s = 1 + Math.min(0.4, Math.abs(flow) / 600) *
+  0.36;
+  thumb.style.transform =
+    `translateX(${x.toFixed(2)}px) scale(${(s * swell).toFixed(3)}, ${(swell / s).toFixed(3)})`;
+  if (Math.abs(v) &gt; 0.05 || Math.abs(x - target) &gt; 0.05 ||
+    Math.abs(swell - swellT) &gt; 0.001)
+    requestAnimationFrame(frame);
+  else running = false;
+}
+
+function kick() {
+  if (!running) {
+    running = true;
+    last = performance.now();
+    requestAnimationFrame(frame);
+  }
+}
+
+btn.addEventListener(&#x27;click&#x27;, () =&gt; {
+  const on = btn.getAttribute(&#x27;aria-checked&#x27;) !==
+    &#x27;true&#x27;;
+  btn.setAttribute(&#x27;aria-checked&#x27;, on);
+  target = on ? MAX : MIN;
+  kick();
+});
+btn.addEventListener(&#x27;pointerenter&#x27;, () =&gt; {
+  swellT = 1.035;
+  kick();
+});
+btn.addEventListener(&#x27;pointerleave&#x27;, () =&gt; {
+  swellT = 1;
+  kick();
+});
+
+thumb.style.transform = `translateX(${MIN}px)`;
+</pre></div></div></div>
+<script>var sb=document.getElementById('sb');function fit(){sb.firstChild.style.transform='scale('+sb.clientWidth/660+')'}fit();addEventListener('resize',fit);var k='html';[].forEach.call(document.querySelectorAll('.tabs button'),function(b){b.onclick=function(){k=b.dataset.k;[].forEach.call(document.querySelectorAll('.tabs button'),function(x){x.classList.toggle('on',x===b)});['html','css','js'].forEach(function(n){document.getElementById('p-'+n).style.display=n===k?'block':'none'})}});
+document.getElementById('cp').onclick=function(e){navigator.clipboard.writeText(document.getElementById('p-'+k).textContent);e.target.textContent='Copied ✓';setTimeout(function(){e.target.textContent='Copy code'},1400)}</script></body></html>

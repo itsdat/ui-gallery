@@ -1,0 +1,202 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><style>*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden}body{display:grid;place-items:center;background:linear-gradient(135deg,#f3ecff 0%,#fdf4fa 55%,#eef6ff 100%);font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;font-feature-settings:'cv11','ss01'}button,input{font-family:inherit}*{-webkit-tap-highlight-color:transparent}button{-webkit-user-select:none;user-select:none}</style><style>:root {
+  --ink: #0a0a0a;
+  --paper: #fafafa;
+  --line: #e5e5e5;
+  --muted: #6b6b6b;
+  --accent: #ff5a5f;
+  --h: 48px;
+  --r: 24px;
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  --shadow: 0 1px 0 rgba(0, 0, 0, .04), 0 10px 24px -14px rgba(0, 0, 0, .28);
+}
+
+.wrap {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 340px;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.jr {
+  position: relative;
+  display: inline-flex;
+  gap: 4px;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: calc(var(--r) + 6px);
+  background: #fff;
+  box-shadow: var(--shadow);
+}
+
+.chip {
+  position: relative;
+  height: var(--h);
+  padding: 0 20px;
+  border: 0;
+  border-radius: var(--r);
+  background: transparent;
+  color: var(--muted);
+  font: 500 14px/1 inherit;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.01em;
+  cursor: pointer;
+  outline: none;
+  transition: color .25s var(--ease), background-color .2s var(--ease), transform .16s var(--ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .chip:hover {
+    background: color-mix(in srgb, var(--ink) 5%, transparent);
+    color: var(--ink);
+  }
+}
+
+.chip:active {
+  transform: scale(.97);
+}
+
+.chip:focus-visible {
+  box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px var(--accent);
+}
+
+.thumb {
+  position: absolute;
+  z-index: 2;
+  top: 6px;
+  left: 6px;
+  height: var(--h);
+  border-radius: var(--r);
+  background: var(--ink);
+  overflow: hidden;
+  pointer-events: none;
+  will-change: transform, width;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .14), 0 6px 16px -8px rgba(0, 0, 0, .45);
+}
+
+.thumb::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 6px;
+  width: 4px;
+  height: 4px;
+  margin-left: -2px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.clone {
+  position: absolute;
+  top: 0;
+  display: inline-flex;
+  gap: 4px;
+  padding: 0 6px;
+}
+
+.clone span {
+  display: block;
+  height: var(--h);
+  padding: 0 20px;
+  color: var(--paper);
+  font: 500 14px/var(--h) inherit;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.01em;
+  white-space: nowrap;
+}
+</style></head><body><div id="__z" style="width:100%;height:100%;display:grid;place-items:center;transform-origin:50% 50%"><div class="wrap">
+  <div class="jr" id="jr" role="radiogroup" aria-label="Payment terms">
+    <div class="thumb" id="thumb">
+      <div class="clone" id="clone"></div>
+    </div>
+    <button class="chip" type="button" role="radio">Net 7</button>
+    <button class="chip" type="button" role="radio">Net 14</button>
+    <button class="chip" type="button" role="radio">Net 30</button>
+    <button class="chip" type="button" role="radio">Net 60</button>
+    <button class="chip" type="button" role="radio">Due now</button>
+  </div>
+</div>
+</div><div id="__cur" style="position:fixed;left:0;top:0;width:34px;height:34px;pointer-events:none;z-index:2147483647;opacity:0;transform:translate(-100px,-100px);transition:opacity .25s"><svg viewBox="0 0 24 24" width="34" height="34" style="filter:drop-shadow(0 3px 5px rgba(0,0,0,.45))"><path d="M4 2.5v17.2l4.6-4.1 3.1 6.6 3-1.4-3.1-6.5 6.3-.3z" fill="#fff" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+<style>#__rip{position:fixed;width:12px;height:12px;border-radius:50%;border:3px solid rgba(124,92,255,.9);pointer-events:none;z-index:2147483646;transform:translate(-50%,-50%) scale(.2);opacity:0}#__rip.go{animation:__rip .55s ease-out}@keyframes __rip{0%{opacity:.9;transform:translate(-50%,-50%) scale(.3)}100%{opacity:0;transform:translate(-50%,-50%) scale(4.2)}}</style><div id="__rip"></div>
+<script>(function(){var c=document.getElementById('__cur'),r=document.getElementById('__rip');addEventListener('mousemove',function(e){c.style.opacity=1;c.style.transform='translate('+e.clientX+'px,'+e.clientY+'px)'},true);addEventListener('mousedown',function(e){c.firstElementChild.style.transform='scale(.82)';r.style.left=e.clientX+'px';r.style.top=e.clientY+'px';r.classList.remove('go');void r.offsetWidth;r.classList.add('go')},true);addEventListener('mouseup',function(){c.firstElementChild.style.transform='scale(1)'},true)})();</script><script>const jr = document.getElementById('jr');
+const thumb = document.getElementById('thumb');
+const clone = document.getElementById('clone');
+const chips = [...jr.querySelectorAll('.chip')];
+chips.forEach((c) => {
+  const s = document.createElement('span');
+  s.textContent = c.textContent;
+  clone.appendChild(s);
+});
+
+// leading edge snaps fast, trailing edge lags on a softer spring: that gap is the jelly stretch
+const edge = (x) => ({
+  x,
+  v: 0
+});
+let L = edge(0),
+  R = edge(0),
+  tL = 0,
+  tR = 0,
+  kL = 700,
+  kR = 700,
+  last = 0,
+  run = false,
+  cur = 0;
+
+function layout() {
+  const c = chips[cur];
+  tL = c.offsetLeft;
+  tR = c.offsetLeft + c.offsetWidth;
+}
+
+function step(e, target, k, d, dt) {
+  e.v += (-k * (e.x - target) - d * e.v) * dt;
+  e.x += e.v * dt;
+}
+
+function frame(now) {
+  const dt = Math.min(0.032, (now - last) / 1000 ||
+  0.016);
+  last = now;
+  step(L, tL, kL, 2 * Math.sqrt(kL) * 0.55, dt);
+  step(R, tR, kR, 2 * Math.sqrt(kR) * 0.55, dt);
+  const w = Math.max(40, R.x - L.x);
+  // stronger, more visible squash/stretch while the pill travels
+  const stretch = Math.min(0.28, Math.abs(w - chips[cur]
+    .offsetWidth) / 260);
+  const squash = 1 - stretch;
+  thumb.style.width = w + 'px';
+  thumb.style.transform =
+    `translateX(${L.x}px) scaleY(${squash})`;
+  clone.style.left = -L.x + 'px';
+  const busy = Math.abs(L.v) + Math.abs(R.v) > 0.5 || Math
+    .abs(L.x - tL) > 0.2 || Math.abs(R.x - tR) > 0.2;
+  if (busy) requestAnimationFrame(frame);
+  else run = false;
+}
+
+function select(i) {
+  const dir = i >= cur ? 1 : -1;
+  cur = i;
+  chips.forEach((c, n) => c.setAttribute('aria-checked',
+    n === i));
+  layout();
+  // wider spring spread = bigger, more legible jelly stretch
+  kL = dir > 0 ? 260 : 780;
+  kR = dir > 0 ? 780 : 260;
+  if (!run) {
+    run = true;
+    last = performance.now();
+    requestAnimationFrame(frame);
+  }
+}
+chips.forEach((c, i) => c.addEventListener('click', () =>
+  select(i)));
+layout();
+L = edge(tL);
+R = edge(tR);
+thumb.style.width = (tR - tL) + 'px';
+thumb.style.transform = `translateX(${tL}px)`;
+select(0);
+</script><script>addEventListener('load',function(){setTimeout(function(){var z=document.getElementById('__z'),l=1e9,t=1e9,r=0,b=0;[].forEach.call(z.children,function(e){var x=e.getBoundingClientRect();if(!x.width)return;l=Math.min(l,x.left);t=Math.min(t,x.top);r=Math.max(r,x.right);b=Math.max(b,x.bottom)});var w=r-l,h=b-t;if(w>0&&h>0){var k=Math.max(1,Math.min(1.5,590/w,330/h));z.style.transform='scale('+k.toFixed(3)+')'}},60)})</script></body></html>

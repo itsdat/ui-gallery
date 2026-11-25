@@ -1,0 +1,296 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Aurora Code Slots — UI Components</title>
+<meta property="og:image" content="thumb.jpg"><style>:root{--bg:#0f0e13;--c:#19181e;--c2:#131217;--b:#26252d;--t:#f4f3f7;--m:#8d8c98;--a:#b79ae6;--glow:rgba(139,92,246,.28)}*{box-sizing:border-box}
+html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--t);font:15px/1.5 "Geist",Inter,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding:34px 24px 90px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:26px}h1{font-size:30px;font-weight:700;letter-spacing:-.025em;margin:0}
+.tools{display:flex;gap:10px;flex-wrap:wrap}.sr{position:relative}.sr svg{position:absolute;left:12px;top:50%;margin-top:-8px;width:16px;height:16px;stroke:var(--m);fill:none;stroke-width:2;stroke-linecap:round}
+.sr input,.sel{background:var(--c);border:1px solid var(--b);color:var(--t);border-radius:12px;height:40px;padding:0 14px;font:inherit;font-size:14px;outline:none}
+.sr input{padding-left:36px;width:200px}.sel{appearance:none;-webkit-appearance:none;padding-right:34px;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238d8c98' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+.sr input:focus,.sel:focus{border-color:#4a4658}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.card{position:relative;display:block;background:var(--c);border:1px solid var(--b);border-radius:20px;padding:6px 6px 14px;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s,border-color .35s}
+.card:hover{transform:translateY(-3px);border-color:#3a3646;box-shadow:0 22px 50px -22px var(--glow),-10px 14px 40px -26px var(--glow)}
+.thumb{position:relative;border-radius:15px;overflow:hidden;background:var(--c2);aspect-ratio:660/380}.thumb img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.card:hover .thumb img{transform:scale(1.035)}
+.new{position:absolute;left:10px;top:10px;padding:4px 9px;border-radius:7px;background:rgba(139,92,246,.28);color:#d9c8ff;font-size:10.5px;font-weight:700;letter-spacing:.1em;backdrop-filter:blur(6px)}
+.heart{position:absolute;right:10px;top:10px;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:rgba(15,14,19,.7);border:1px solid rgba(255,255,255,.1);opacity:0;transform:translateY(-4px);transition:.25s;cursor:pointer;backdrop-filter:blur(6px)}
+.heart svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2;stroke-linejoin:round;transition:.2s}.card:hover .heart,.heart.on{opacity:1;transform:none}.heart.on svg{fill:#ff6b9a;stroke:#ff6b9a}
+.meta{padding:13px 12px 0}.meta b{display:block;font-size:15.5px;font-weight:600;letter-spacing:-.01em;transition:color .25s}.card:hover .meta b{color:var(--a)}
+.meta small{display:block;margin-top:3px;font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--m)}
+.empty{color:var(--m);padding:60px 0;text-align:center}
+.up{position:fixed;right:22px;bottom:22px;width:44px;height:44px;border-radius:13px;background:var(--c);border:1px solid var(--b);color:var(--t);display:grid;place-items:center;cursor:pointer;opacity:0;pointer-events:none;transition:.3s}.up.show{opacity:1;pointer-events:auto}.up:hover{border-color:#4a4658}
+.up svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.back{display:inline-flex;align-items:center;gap:6px;margin-bottom:20px;color:var(--m);font-size:14px}.back:hover{color:var(--t)}
+.two{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:22px}.two>div{min-width:0}.sub{color:var(--m);margin:6px 0 26px}
+.panel{background:var(--c);border:1px solid var(--b);border-radius:20px;padding:6px}
+.sb{position:relative;aspect-ratio:660/380;overflow:hidden;border-radius:15px;background:#000}.sb iframe{position:absolute;left:0;top:0;width:660px;height:380px;border:0;transform-origin:0 0}
+.btn{display:inline-flex;align-items:center;gap:8px;background:#f4f3f7;color:#0f0e13;padding:0 18px;height:42px;border-radius:12px;font-weight:600;border:0;cursor:pointer;font:inherit;font-weight:600;font-size:14px;transition:.2s}.btn:hover{background:#fff;transform:translateY(-1px)}
+.ghost{background:var(--c);border:1px solid var(--b);color:var(--t)}.ghost:hover{background:#201f26}.row{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
+.tabs{display:flex;gap:6px;margin-bottom:10px}.tabs button{background:var(--c);border:1px solid var(--b);color:var(--m);height:34px;padding:0 15px;border-radius:10px;cursor:pointer;font:inherit;font-size:13.5px}.tabs .on{background:#f4f3f7;border-color:#f4f3f7;color:#0f0e13;font-weight:600}
+pre{margin:0;background:var(--c2);border:1px solid var(--b);border-radius:18px;padding:18px;overflow:auto;max-height:560px;font:12.5px/1.65 ui-monospace,"SF Mono",Menlo,Consolas,monospace;color:#cfcdda}
+.cap{white-space:pre-line;color:var(--m);background:var(--c);border:1px solid var(--b);border-radius:16px;padding:16px;margin-top:6px;font-size:14px}
+@media(max-width:860px){.two{grid-template-columns:1fr}}</style></head><body><div class="wrap"><a class="back" href="../../">← UI Components</a>
+<h1>Aurora Code Slots</h1><p class="sub">Micro · Springy OTP boxes with a centre wash reveal</p>
+<div class="two"><div><div class="panel"><div class="sb" id="sb"><iframe src="preview.html" title="Live demo"></iframe></div></div><div class="row"><a class="btn" href="aurora-code-slots.zip" download>Download code (.zip)</a><a class="btn ghost" href="reel.mp4">▶ Watch reel</a><button class="btn ghost" id="cp">Copy code</button></div>
+<div class="cap">Six digits, one satisfying drop. ✨
+Springy OTP boxes with a centre wash and a CSS check.
+Save this for your next auth screen. #ui #css
+
+#webdev #css #uianimation #frontend #otp</div></div>
+<div><div class="tabs"><button class="on" data-k="html">HTML</button><button data-k="css">CSS</button><button data-k="js">JS</button></div><pre id="p-html" style="display:block">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;title&gt;Aurora Code Slots&lt;/title&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;app.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class=&quot;stage-wrap&quot;&gt;
+    &lt;div class=&quot;otp&quot; id=&quot;otp&quot;&gt;
+      &lt;div class=&quot;slots&quot;&gt;
+        &lt;div class=&quot;slot&quot;&gt;&lt;i&gt;&lt;/i&gt;&lt;/div&gt;
+        &lt;div class=&quot;slot&quot;&gt;&lt;i&gt;&lt;/i&gt;&lt;/div&gt;
+        &lt;div class=&quot;slot&quot;&gt;&lt;i&gt;&lt;/i&gt;&lt;/div&gt;
+        &lt;div class=&quot;slot&quot;&gt;&lt;i&gt;&lt;/i&gt;&lt;/div&gt;
+        &lt;div class=&quot;slot&quot;&gt;&lt;i&gt;&lt;/i&gt;&lt;/div&gt;
+        &lt;div class=&quot;slot&quot;&gt;&lt;i&gt;&lt;/i&gt;&lt;/div&gt;
+        &lt;span class=&quot;caret&quot;&gt;&lt;/span&gt;
+        &lt;div class=&quot;wash&quot;&gt;&lt;span class=&quot;ck&quot;&gt;&lt;/span&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;input id=&quot;otpIn&quot; maxlength=&quot;6&quot; inputmode=&quot;numeric&quot; autocomplete=&quot;one-time-code&quot; aria-label=&quot;Verification code&quot;&gt;
+      &lt;p class=&quot;hint&quot;&gt;Enter the 6-digit code&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;script src=&quot;app.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre><pre id="p-css" style="display:none">:root {
+  --bg: #070b1a;
+  --fg: rgba(255, 255, 255, .92);
+  --muted: rgba(255, 255, 255, .52);
+  --slot: rgba(255, 255, 255, .06);
+  --slot-on: rgba(255, 255, 255, .1);
+  --light: #f4f6fb;
+  --ink: #0b1020;
+  --accent: #f472b6;
+  --radius: 14px;
+  --shadow: 0 1px 0 rgba(255, 255, 255, .08) inset, 0 2px 6px rgba(0, 0, 0, .35), 0 28px 56px -24px rgba(0, 0, 0, .75);
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  --spring: cubic-bezier(.34, 1.56, .64, 1);
+  --gap: 10px;
+  --box-w: 54px;
+  --box-h: 68px;
+}
+
+.stage-wrap {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+}
+
+.otp {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 20px;
+  padding: 28px 32px 24px;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, .08);
+  background: rgba(12, 18, 38, .55);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+}
+
+.slots {
+  position: relative;
+  display: flex;
+  gap: var(--gap);
+}
+
+.slot {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--box-w);
+  height: var(--box-h);
+  border-radius: var(--radius);
+  background: var(--slot);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .06) inset, 0 0 0 1px rgba(255, 255, 255, .04) inset;
+  overflow: hidden;
+  transition: background-color .24s var(--ease), box-shadow .24s var(--ease);
+}
+
+.slot.on {
+  background: var(--slot-on);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .1) inset, 0 0 0 1px rgba(255, 255, 255, .1) inset;
+}
+
+.slot.full {
+  background: var(--light);
+  box-shadow: 0 1px 0 #fff inset, 0 6px 16px -8px rgba(0, 0, 0, .6);
+}
+
+.slot i {
+  color: var(--ink);
+  font: 600 28px/1 system-ui, -apple-system, sans-serif;
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
+  opacity: 0;
+  transform: translateY(-12px) scale(.8);
+}
+
+.slot.full i {
+  opacity: 1;
+  transform: none;
+  transition: transform .3s var(--spring), opacity .14s var(--ease);
+}
+
+.caret {
+  position: absolute;
+  top: 17px;
+  left: 0;
+  width: 2px;
+  height: 34px;
+  border-radius: 1px;
+  background: var(--light);
+  transform: translateX(26px);
+  transition: transform .26s var(--ease), opacity .2s var(--ease);
+  animation: blink 1s steps(2) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.otp.ok .caret,
+.otp.idle .caret {
+  opacity: 0;
+  animation: none;
+}
+
+.wash {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius);
+  background: var(--light);
+  clip-path: inset(0 50% 0 50% round var(--radius));
+  transition: clip-path .32s var(--ease);
+  pointer-events: none;
+}
+
+.otp.ok .wash {
+  clip-path: inset(0 0 0 0 round var(--radius));
+}
+
+.ck {
+  width: 14px;
+  height: 28px;
+  border: solid var(--ink);
+  border-width: 0 5px 5px 0;
+  border-radius: 2px;
+  opacity: 0;
+  transform: translateY(8px) rotate(45deg);
+  transition: opacity .2s var(--ease), transform .3s var(--ease);
+}
+
+.otp.ok .ck {
+  opacity: 1;
+  transform: translateY(-3px) rotate(45deg);
+  transition-delay: .28s;
+}
+
+.otp.ok .slot i {
+  transform: translateY(14px);
+  opacity: 0;
+}
+
+#otpIn {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: var(--box-h);
+  opacity: 0;
+  cursor: text;
+}
+
+.hint {
+  margin: 0;
+  color: var(--muted);
+  font: 500 14px/1 system-ui, -apple-system, sans-serif;
+  letter-spacing: .01em;
+  transition: color .24s var(--ease);
+}
+
+.otp.ok .hint {
+  color: var(--fg);
+}
+
+.otp.err .slot {
+  background: color-mix(in srgb, var(--accent) 24%, var(--slot));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent) inset;
+}
+
+.otp.err .hint {
+  color: var(--accent);
+}
+</pre><pre id="p-js" style="display:none">const root = document.getElementById(&#x27;otp&#x27;);
+const input = document.getElementById(&#x27;otpIn&#x27;);
+const slots = [...root.querySelectorAll(&#x27;.slot&#x27;)];
+const caret = root.querySelector(&#x27;.caret&#x27;);
+const hint = root.querySelector(&#x27;.hint&#x27;);
+const STEP = 54 + 10;
+root.classList.add(&#x27;idle&#x27;);
+
+function paint() {
+  const v = input.value.replace(/\D/g, &#x27;&#x27;).slice(0, 6);
+  input.value = v;
+  slots.forEach((s, i) =&gt; {
+    const had = s.classList.contains(&#x27;full&#x27;);
+    const digit = v[i] || &#x27;&#x27;;
+    if (s.firstChild.textContent !== digit) s
+      .firstChild.textContent = digit;
+    s.classList.toggle(&#x27;full&#x27;, i &lt; v.length);
+    s.classList.toggle(&#x27;on&#x27;, i === v.length &amp;&amp;
+      document.activeElement === input);
+    if (i &lt; v.length &amp;&amp; !had) {
+      s.firstChild.style.transition = &#x27;none&#x27;;
+      s.firstChild.style.transform =
+        &#x27;translateY(-12px) scale(.8)&#x27;;
+      s.firstChild.offsetWidth;
+      s.firstChild.style.transition = &#x27;&#x27;;
+      s.firstChild.style.transform = &#x27;&#x27;;
+    }
+  });
+  caret.style.transform =
+    `translateX(${Math.min(v.length, 5) * STEP + 26}px)`;
+  root.classList.toggle(&#x27;idle&#x27;, document.activeElement !==
+    input &amp;&amp; !v.length);
+  if (v.length === 6) {
+    root.classList.add(&#x27;ok&#x27;);
+    hint.textContent = &#x27;Code verified&#x27;;
+    input.blur();
+    setTimeout(reset, 2200);
+  }
+}
+
+function reset() {
+  root.classList.remove(&#x27;ok&#x27;, &#x27;err&#x27;);
+  input.value = &#x27;&#x27;;
+  hint.textContent = &#x27;Enter the 6-digit code&#x27;;
+  slots.forEach((s) =&gt; s.classList.remove(&#x27;full&#x27;, &#x27;on&#x27;));
+  paint();
+}
+
+input.addEventListener(&#x27;input&#x27;, paint);
+input.addEventListener(&#x27;focus&#x27;, paint);
+input.addEventListener(&#x27;blur&#x27;, () =&gt; {
+  if (!root.classList.contains(&#x27;ok&#x27;)) paint();
+});
+</pre></div></div></div>
+<script>var sb=document.getElementById('sb');function fit(){sb.firstChild.style.transform='scale('+sb.clientWidth/660+')'}fit();addEventListener('resize',fit);var k='html';[].forEach.call(document.querySelectorAll('.tabs button'),function(b){b.onclick=function(){k=b.dataset.k;[].forEach.call(document.querySelectorAll('.tabs button'),function(x){x.classList.toggle('on',x===b)});['html','css','js'].forEach(function(n){document.getElementById('p-'+n).style.display=n===k?'block':'none'})}});
+document.getElementById('cp').onclick=function(e){navigator.clipboard.writeText(document.getElementById('p-'+k).textContent);e.target.textContent='Copied ✓';setTimeout(function(){e.target.textContent='Copy code'},1400)}</script></body></html>

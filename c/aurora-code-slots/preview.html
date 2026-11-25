@@ -1,0 +1,259 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><style>*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden}body{display:grid;place-items:center;background:#0a0d1c;font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;font-feature-settings:'cv11','ss01'}button,input{font-family:inherit}*{-webkit-tap-highlight-color:transparent}button{-webkit-user-select:none;user-select:none}</style><style>:root {
+  --bg: #070b1a;
+  --fg: rgba(255, 255, 255, .92);
+  --muted: rgba(255, 255, 255, .52);
+  --slot: rgba(255, 255, 255, .06);
+  --slot-on: rgba(255, 255, 255, .1);
+  --light: #f4f6fb;
+  --ink: #0b1020;
+  --accent: #f472b6;
+  --radius: 14px;
+  --shadow: 0 1px 0 rgba(255, 255, 255, .08) inset, 0 2px 6px rgba(0, 0, 0, .35), 0 28px 56px -24px rgba(0, 0, 0, .75);
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  --spring: cubic-bezier(.34, 1.56, .64, 1);
+  --gap: 10px;
+  --box-w: 54px;
+  --box-h: 68px;
+}
+
+.stage-wrap {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+}
+
+.otp {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 20px;
+  padding: 28px 32px 24px;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, .08);
+  background: rgba(12, 18, 38, .55);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+}
+
+.slots {
+  position: relative;
+  display: flex;
+  gap: var(--gap);
+}
+
+.slot {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--box-w);
+  height: var(--box-h);
+  border-radius: var(--radius);
+  background: var(--slot);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .06) inset, 0 0 0 1px rgba(255, 255, 255, .04) inset;
+  overflow: hidden;
+  transition: background-color .24s var(--ease), box-shadow .24s var(--ease);
+}
+
+.slot.on {
+  background: var(--slot-on);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .1) inset, 0 0 0 1px rgba(255, 255, 255, .1) inset;
+}
+
+.slot.full {
+  background: var(--light);
+  box-shadow: 0 1px 0 #fff inset, 0 6px 16px -8px rgba(0, 0, 0, .6);
+}
+
+.slot i {
+  color: var(--ink);
+  font: 600 28px/1 system-ui, -apple-system, sans-serif;
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
+  opacity: 0;
+  transform: translateY(-12px) scale(.8);
+}
+
+.slot.full i {
+  opacity: 1;
+  transform: none;
+  transition: transform .3s var(--spring), opacity .14s var(--ease);
+}
+
+.caret {
+  position: absolute;
+  top: 17px;
+  left: 0;
+  width: 2px;
+  height: 34px;
+  border-radius: 1px;
+  background: var(--light);
+  transform: translateX(26px);
+  transition: transform .26s var(--ease), opacity .2s var(--ease);
+  animation: blink 1s steps(2) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.otp.ok .caret,
+.otp.idle .caret {
+  opacity: 0;
+  animation: none;
+}
+
+.wash {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius);
+  background: var(--light);
+  clip-path: inset(0 50% 0 50% round var(--radius));
+  transition: clip-path .32s var(--ease);
+  pointer-events: none;
+}
+
+.otp.ok .wash {
+  clip-path: inset(0 0 0 0 round var(--radius));
+}
+
+.ck {
+  width: 14px;
+  height: 28px;
+  border: solid var(--ink);
+  border-width: 0 5px 5px 0;
+  border-radius: 2px;
+  opacity: 0;
+  transform: translateY(8px) rotate(45deg);
+  transition: opacity .2s var(--ease), transform .3s var(--ease);
+}
+
+.otp.ok .ck {
+  opacity: 1;
+  transform: translateY(-3px) rotate(45deg);
+  transition-delay: .28s;
+}
+
+.otp.ok .slot i {
+  transform: translateY(14px);
+  opacity: 0;
+}
+
+#otpIn {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: var(--box-h);
+  opacity: 0;
+  cursor: text;
+}
+
+.hint {
+  margin: 0;
+  color: var(--muted);
+  font: 500 14px/1 system-ui, -apple-system, sans-serif;
+  letter-spacing: .01em;
+  transition: color .24s var(--ease);
+}
+
+.otp.ok .hint {
+  color: var(--fg);
+}
+
+.otp.err .slot {
+  background: color-mix(in srgb, var(--accent) 24%, var(--slot));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent) inset;
+}
+
+.otp.err .hint {
+  color: var(--accent);
+}
+</style></head><body><canvas id="__fx" style="position:fixed;inset:0;width:100%;height:100%;z-index:-1;display:block"></canvas>
+<script>(function(){var cv=document.getElementById('__fx'),gl=cv.getContext('webgl',{antialias:false,alpha:false});if(!gl)return;
+var VS='attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}',FS='precision highp float;uniform vec2 R;uniform float T;uniform vec3 c0;uniform vec3 c1;uniform vec3 c2;uniform vec2 M;uniform float S;\n\nvec3 permute(vec3 x){return mod(((x*34.0)+1.0)*x,289.0);}\nfloat snoise(vec2 v){\n  const vec4 C=vec4(0.211324865405187,0.366025403784439,-0.577350269189626,0.024390243902439);\n  vec2 i=floor(v+dot(v,C.yy)); vec2 x0=v-i+dot(i,C.xx);\n  vec2 i1=(x0.x>x0.y)?vec2(1.0,0.0):vec2(0.0,1.0);\n  vec4 x12=x0.xyxy+C.xxzz; x12.xy-=i1; i=mod(i,289.0);\n  vec3 p=permute(permute(i.y+vec3(0.0,i1.y,1.0))+i.x+vec3(0.0,i1.x,1.0));\n  vec3 m=max(0.5-vec3(dot(x0,x0),dot(x12.xy,x12.xy),dot(x12.zw,x12.zw)),0.0); m=m*m; m=m*m;\n  vec3 x=2.0*fract(p*C.www)-1.0; vec3 h=abs(x)-0.5; vec3 ox=floor(x+0.5); vec3 a0=x-ox;\n  m*=1.79284291400159-0.85373472095314*(a0*a0+h*h);\n  vec3 g; g.x=a0.x*x0.x+h.x*x0.y; g.yz=a0.yz*x12.xz+h.yz*x12.yw;\n  return 130.0*dot(m,g);\n}\nfloat hash(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}\nvec3 ramp(float t){ t=clamp(t,0.0,1.0); return t<0.5?mix(c0,c1,smoothstep(0.0,0.5,t)):mix(c1,c2,smoothstep(0.5,1.0,t)); }\n\nvoid main(){\n  vec2 uv=gl_FragCoord.xy/R; float X=(gl_FragCoord.x-R.x*.5)/R.y; float t=T*.6+S*20.0;\n  vec3 col=c0*(0.35+0.65*uv.y*.0+0.5*(1.0-uv.y));\n  float reach=exp(-pow((X-M.x)/.35,2.0))*M.y;\n  for(int k=0;k<3;k++){\n    float kf=float(k); float seed=kf*13.7+S*9.0; float pace=t*(1.0-kf*.18);\n    float warp=snoise(vec2(X*.5+pace*.03+seed,pace*.06+seed));\n    float wave=snoise(vec2(X*.8+warp*.4-pace*.04+seed,pace*.08-seed))*.7+snoise(vec2(X*1.7+warp*.5+pace*.05-seed,pace*.1))*.3;\n    float edge=.50+kf*.08+wave*.18+reach*.06;\n    float d=clamp((edge-uv.y)/(.55+kf*.1),0.0,1.0);\n    float a=pow(d,1.7)*(0.9-kf*.28)*(.8+.2*snoise(vec2(X*2.0-pace*.05+seed,uv.y*3.0+pace*.1)));\n    vec3 tint=ramp(uv.x*.9+.05+.08*sin(pace*.1+kf*2.3));\n    col=1.0-(1.0-col)*(1.0-tint*a*.85);\n  }\n  col+=(hash(gl_FragCoord.xy)-.5)/200.0; gl_FragColor=vec4(col,1.0);\n}';
+function sh(t,s){var o=gl.createShader(t);gl.shaderSource(o,s);gl.compileShader(o);return o}
+var pr=gl.createProgram();gl.attachShader(pr,sh(gl.VERTEX_SHADER,VS));gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,FS));gl.linkProgram(pr);
+if(!gl.getProgramParameter(pr,gl.LINK_STATUS)){cv.remove();return}gl.useProgram(pr);
+var b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+var loc=gl.getAttribLocation(pr,'p');gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+var C=[[0.0431, 0.0627, 0.1882],[0.3216, 0.1529, 1.0],[0.4863, 1.0, 0.4039]],u=function(n){return gl.getUniformLocation(pr,n)};
+gl.uniform3fv(u('c0'),C[0]);gl.uniform3fv(u('c1'),C[1]);gl.uniform3fv(u('c2'),C[2]);gl.uniform1f(u('S'),0.412);
+var mx=0,my=0,t0=performance.now();addEventListener('mousemove',function(e){mx=(e.clientX-innerWidth/2)/innerHeight;my=1});
+function fit(){var d=Math.min(devicePixelRatio||1,1.5)*.75;cv.width=Math.max(2,innerWidth*d|0);cv.height=Math.max(2,innerHeight*d|0);gl.viewport(0,0,cv.width,cv.height)}
+fit();addEventListener('resize',fit);
+(function loop(n){gl.uniform2f(u('R'),cv.width,cv.height);gl.uniform1f(u('T'),(n-t0)/1000);gl.uniform2f(u('M'),mx,my);gl.drawArrays(gl.TRIANGLES,0,3);requestAnimationFrame(loop)})(t0);
+})();</script><div id="__z" style="width:100%;height:100%;display:grid;place-items:center;transform-origin:50% 50%"><div class="stage-wrap">
+  <div class="otp" id="otp">
+    <div class="slots">
+      <div class="slot"><i></i></div>
+      <div class="slot"><i></i></div>
+      <div class="slot"><i></i></div>
+      <div class="slot"><i></i></div>
+      <div class="slot"><i></i></div>
+      <div class="slot"><i></i></div>
+      <span class="caret"></span>
+      <div class="wash"><span class="ck"></span></div>
+    </div>
+    <input id="otpIn" maxlength="6" inputmode="numeric" autocomplete="one-time-code" aria-label="Verification code">
+    <p class="hint">Enter the 6-digit code</p>
+  </div>
+</div>
+</div><div id="__cur" style="position:fixed;left:0;top:0;width:34px;height:34px;pointer-events:none;z-index:2147483647;opacity:0;transform:translate(-100px,-100px);transition:opacity .25s"><svg viewBox="0 0 24 24" width="34" height="34" style="filter:drop-shadow(0 3px 5px rgba(0,0,0,.45))"><path d="M4 2.5v17.2l4.6-4.1 3.1 6.6 3-1.4-3.1-6.5 6.3-.3z" fill="#fff" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+<style>#__rip{position:fixed;width:12px;height:12px;border-radius:50%;border:3px solid rgba(124,92,255,.9);pointer-events:none;z-index:2147483646;transform:translate(-50%,-50%) scale(.2);opacity:0}#__rip.go{animation:__rip .55s ease-out}@keyframes __rip{0%{opacity:.9;transform:translate(-50%,-50%) scale(.3)}100%{opacity:0;transform:translate(-50%,-50%) scale(4.2)}}</style><div id="__rip"></div>
+<script>(function(){var c=document.getElementById('__cur'),r=document.getElementById('__rip');addEventListener('mousemove',function(e){c.style.opacity=1;c.style.transform='translate('+e.clientX+'px,'+e.clientY+'px)'},true);addEventListener('mousedown',function(e){c.firstElementChild.style.transform='scale(.82)';r.style.left=e.clientX+'px';r.style.top=e.clientY+'px';r.classList.remove('go');void r.offsetWidth;r.classList.add('go')},true);addEventListener('mouseup',function(){c.firstElementChild.style.transform='scale(1)'},true)})();</script><script>const root = document.getElementById('otp');
+const input = document.getElementById('otpIn');
+const slots = [...root.querySelectorAll('.slot')];
+const caret = root.querySelector('.caret');
+const hint = root.querySelector('.hint');
+const STEP = 54 + 10;
+root.classList.add('idle');
+
+function paint() {
+  const v = input.value.replace(/\D/g, '').slice(0, 6);
+  input.value = v;
+  slots.forEach((s, i) => {
+    const had = s.classList.contains('full');
+    const digit = v[i] || '';
+    if (s.firstChild.textContent !== digit) s
+      .firstChild.textContent = digit;
+    s.classList.toggle('full', i < v.length);
+    s.classList.toggle('on', i === v.length &&
+      document.activeElement === input);
+    if (i < v.length && !had) {
+      s.firstChild.style.transition = 'none';
+      s.firstChild.style.transform =
+        'translateY(-12px) scale(.8)';
+      s.firstChild.offsetWidth;
+      s.firstChild.style.transition = '';
+      s.firstChild.style.transform = '';
+    }
+  });
+  caret.style.transform =
+    `translateX(${Math.min(v.length, 5) * STEP + 26}px)`;
+  root.classList.toggle('idle', document.activeElement !==
+    input && !v.length);
+  if (v.length === 6) {
+    root.classList.add('ok');
+    hint.textContent = 'Code verified';
+    input.blur();
+    setTimeout(reset, 2200);
+  }
+}
+
+function reset() {
+  root.classList.remove('ok', 'err');
+  input.value = '';
+  hint.textContent = 'Enter the 6-digit code';
+  slots.forEach((s) => s.classList.remove('full', 'on'));
+  paint();
+}
+
+input.addEventListener('input', paint);
+input.addEventListener('focus', paint);
+input.addEventListener('blur', () => {
+  if (!root.classList.contains('ok')) paint();
+});
+</script><script>addEventListener('load',function(){setTimeout(function(){var z=document.getElementById('__z'),l=1e9,t=1e9,r=0,b=0;[].forEach.call(z.children,function(e){var x=e.getBoundingClientRect();if(!x.width)return;l=Math.min(l,x.left);t=Math.min(t,x.top);r=Math.max(r,x.right);b=Math.max(b,x.bottom)});var w=r-l,h=b-t;if(w>0&&h>0){var k=Math.max(1,Math.min(1.5,590/w,330/h));z.style.transform='scale('+k.toFixed(3)+')'}},60)})</script></body></html>

@@ -1,0 +1,253 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Jelly Terms Radio — UI Components</title>
+<meta property="og:image" content="thumb.jpg"><style>:root{--bg:#0f0e13;--c:#19181e;--c2:#131217;--b:#26252d;--t:#f4f3f7;--m:#8d8c98;--a:#b79ae6;--glow:rgba(139,92,246,.28)}*{box-sizing:border-box}
+html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--t);font:15px/1.5 "Geist",Inter,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding:34px 24px 90px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:26px}h1{font-size:30px;font-weight:700;letter-spacing:-.025em;margin:0}
+.tools{display:flex;gap:10px;flex-wrap:wrap}.sr{position:relative}.sr svg{position:absolute;left:12px;top:50%;margin-top:-8px;width:16px;height:16px;stroke:var(--m);fill:none;stroke-width:2;stroke-linecap:round}
+.sr input,.sel{background:var(--c);border:1px solid var(--b);color:var(--t);border-radius:12px;height:40px;padding:0 14px;font:inherit;font-size:14px;outline:none}
+.sr input{padding-left:36px;width:200px}.sel{appearance:none;-webkit-appearance:none;padding-right:34px;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238d8c98' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+.sr input:focus,.sel:focus{border-color:#4a4658}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.card{position:relative;display:block;background:var(--c);border:1px solid var(--b);border-radius:20px;padding:6px 6px 14px;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s,border-color .35s}
+.card:hover{transform:translateY(-3px);border-color:#3a3646;box-shadow:0 22px 50px -22px var(--glow),-10px 14px 40px -26px var(--glow)}
+.thumb{position:relative;border-radius:15px;overflow:hidden;background:var(--c2);aspect-ratio:660/380}.thumb img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.card:hover .thumb img{transform:scale(1.035)}
+.new{position:absolute;left:10px;top:10px;padding:4px 9px;border-radius:7px;background:rgba(139,92,246,.28);color:#d9c8ff;font-size:10.5px;font-weight:700;letter-spacing:.1em;backdrop-filter:blur(6px)}
+.heart{position:absolute;right:10px;top:10px;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:rgba(15,14,19,.7);border:1px solid rgba(255,255,255,.1);opacity:0;transform:translateY(-4px);transition:.25s;cursor:pointer;backdrop-filter:blur(6px)}
+.heart svg{width:15px;height:15px;stroke:#fff;fill:none;stroke-width:2;stroke-linejoin:round;transition:.2s}.card:hover .heart,.heart.on{opacity:1;transform:none}.heart.on svg{fill:#ff6b9a;stroke:#ff6b9a}
+.meta{padding:13px 12px 0}.meta b{display:block;font-size:15.5px;font-weight:600;letter-spacing:-.01em;transition:color .25s}.card:hover .meta b{color:var(--a)}
+.meta small{display:block;margin-top:3px;font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--m)}
+.empty{color:var(--m);padding:60px 0;text-align:center}
+.up{position:fixed;right:22px;bottom:22px;width:44px;height:44px;border-radius:13px;background:var(--c);border:1px solid var(--b);color:var(--t);display:grid;place-items:center;cursor:pointer;opacity:0;pointer-events:none;transition:.3s}.up.show{opacity:1;pointer-events:auto}.up:hover{border-color:#4a4658}
+.up svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.back{display:inline-flex;align-items:center;gap:6px;margin-bottom:20px;color:var(--m);font-size:14px}.back:hover{color:var(--t)}
+.two{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:22px}.two>div{min-width:0}.sub{color:var(--m);margin:6px 0 26px}
+.panel{background:var(--c);border:1px solid var(--b);border-radius:20px;padding:6px}
+.sb{position:relative;aspect-ratio:660/380;overflow:hidden;border-radius:15px;background:#000}.sb iframe{position:absolute;left:0;top:0;width:660px;height:380px;border:0;transform-origin:0 0}
+.btn{display:inline-flex;align-items:center;gap:8px;background:#f4f3f7;color:#0f0e13;padding:0 18px;height:42px;border-radius:12px;font-weight:600;border:0;cursor:pointer;font:inherit;font-weight:600;font-size:14px;transition:.2s}.btn:hover{background:#fff;transform:translateY(-1px)}
+.ghost{background:var(--c);border:1px solid var(--b);color:var(--t)}.ghost:hover{background:#201f26}.row{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
+.tabs{display:flex;gap:6px;margin-bottom:10px}.tabs button{background:var(--c);border:1px solid var(--b);color:var(--m);height:34px;padding:0 15px;border-radius:10px;cursor:pointer;font:inherit;font-size:13.5px}.tabs .on{background:#f4f3f7;border-color:#f4f3f7;color:#0f0e13;font-weight:600}
+pre{margin:0;background:var(--c2);border:1px solid var(--b);border-radius:18px;padding:18px;overflow:auto;max-height:560px;font:12.5px/1.65 ui-monospace,"SF Mono",Menlo,Consolas,monospace;color:#cfcdda}
+.cap{white-space:pre-line;color:var(--m);background:var(--c);border:1px solid var(--b);border-radius:16px;padding:16px;margin-top:6px;font-size:14px}
+@media(max-width:860px){.two{grid-template-columns:1fr}}</style></head><body><div class="wrap"><a class="back" href="../../">← UI Components</a>
+<h1>Jelly Terms Radio</h1><p class="sub">Micro · Spring-loaded pill snaps between payment terms</p>
+<div class="two"><div><div class="panel"><div class="sb" id="sb"><iframe src="preview.html" title="Live demo"></iframe></div></div><div class="row"><a class="btn" href="jelly-terms-radio.zip" download>Download code (.zip)</a><a class="btn ghost" href="reel.mp4">▶ Watch reel</a><button class="btn ghost" id="cp">Copy code</button></div>
+<div class="cap">Payment terms shouldn&#x27;t feel boring 💸 Watch the jelly pill snap between Net 7 and Due now.
+Two springs, one squash, zero libraries.
+Save this for your next invoice UI 👇
+
+#webdev #css #uidesign #microinteractions #javascript #frontend</div></div>
+<div><div class="tabs"><button class="on" data-k="html">HTML</button><button data-k="css">CSS</button><button data-k="js">JS</button></div><pre id="p-html" style="display:block">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;title&gt;Jelly Terms Radio&lt;/title&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;app.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class=&quot;wrap&quot;&gt;
+    &lt;div class=&quot;jr&quot; id=&quot;jr&quot; role=&quot;radiogroup&quot; aria-label=&quot;Payment terms&quot;&gt;
+      &lt;div class=&quot;thumb&quot; id=&quot;thumb&quot;&gt;
+        &lt;div class=&quot;clone&quot; id=&quot;clone&quot;&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;button class=&quot;chip&quot; type=&quot;button&quot; role=&quot;radio&quot;&gt;Net 7&lt;/button&gt;
+      &lt;button class=&quot;chip&quot; type=&quot;button&quot; role=&quot;radio&quot;&gt;Net 14&lt;/button&gt;
+      &lt;button class=&quot;chip&quot; type=&quot;button&quot; role=&quot;radio&quot;&gt;Net 30&lt;/button&gt;
+      &lt;button class=&quot;chip&quot; type=&quot;button&quot; role=&quot;radio&quot;&gt;Net 60&lt;/button&gt;
+      &lt;button class=&quot;chip&quot; type=&quot;button&quot; role=&quot;radio&quot;&gt;Due now&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;script src=&quot;app.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre><pre id="p-css" style="display:none">:root {
+  --ink: #0a0a0a;
+  --paper: #fafafa;
+  --line: #e5e5e5;
+  --muted: #6b6b6b;
+  --accent: #ff5a5f;
+  --h: 48px;
+  --r: 24px;
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  --shadow: 0 1px 0 rgba(0, 0, 0, .04), 0 10px 24px -14px rgba(0, 0, 0, .28);
+}
+
+.wrap {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 340px;
+  font-family: ui-sans-serif, system-ui, -apple-system, &quot;Segoe UI&quot;, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.jr {
+  position: relative;
+  display: inline-flex;
+  gap: 4px;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: calc(var(--r) + 6px);
+  background: #fff;
+  box-shadow: var(--shadow);
+}
+
+.chip {
+  position: relative;
+  height: var(--h);
+  padding: 0 20px;
+  border: 0;
+  border-radius: var(--r);
+  background: transparent;
+  color: var(--muted);
+  font: 500 14px/1 inherit;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.01em;
+  cursor: pointer;
+  outline: none;
+  transition: color .25s var(--ease), background-color .2s var(--ease), transform .16s var(--ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .chip:hover {
+    background: color-mix(in srgb, var(--ink) 5%, transparent);
+    color: var(--ink);
+  }
+}
+
+.chip:active {
+  transform: scale(.97);
+}
+
+.chip:focus-visible {
+  box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px var(--accent);
+}
+
+.thumb {
+  position: absolute;
+  z-index: 2;
+  top: 6px;
+  left: 6px;
+  height: var(--h);
+  border-radius: var(--r);
+  background: var(--ink);
+  overflow: hidden;
+  pointer-events: none;
+  will-change: transform, width;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .14), 0 6px 16px -8px rgba(0, 0, 0, .45);
+}
+
+.thumb::after {
+  content: &quot;&quot;;
+  position: absolute;
+  left: 50%;
+  bottom: 6px;
+  width: 4px;
+  height: 4px;
+  margin-left: -2px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.clone {
+  position: absolute;
+  top: 0;
+  display: inline-flex;
+  gap: 4px;
+  padding: 0 6px;
+}
+
+.clone span {
+  display: block;
+  height: var(--h);
+  padding: 0 20px;
+  color: var(--paper);
+  font: 500 14px/var(--h) inherit;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.01em;
+  white-space: nowrap;
+}
+</pre><pre id="p-js" style="display:none">const jr = document.getElementById(&#x27;jr&#x27;);
+const thumb = document.getElementById(&#x27;thumb&#x27;);
+const clone = document.getElementById(&#x27;clone&#x27;);
+const chips = [...jr.querySelectorAll(&#x27;.chip&#x27;)];
+chips.forEach((c) =&gt; {
+  const s = document.createElement(&#x27;span&#x27;);
+  s.textContent = c.textContent;
+  clone.appendChild(s);
+});
+
+// leading edge snaps fast, trailing edge lags on a softer spring: that gap is the jelly stretch
+const edge = (x) =&gt; ({
+  x,
+  v: 0
+});
+let L = edge(0),
+  R = edge(0),
+  tL = 0,
+  tR = 0,
+  kL = 700,
+  kR = 700,
+  last = 0,
+  run = false,
+  cur = 0;
+
+function layout() {
+  const c = chips[cur];
+  tL = c.offsetLeft;
+  tR = c.offsetLeft + c.offsetWidth;
+}
+
+function step(e, target, k, d, dt) {
+  e.v += (-k * (e.x - target) - d * e.v) * dt;
+  e.x += e.v * dt;
+}
+
+function frame(now) {
+  const dt = Math.min(0.032, (now - last) / 1000 ||
+  0.016);
+  last = now;
+  step(L, tL, kL, 2 * Math.sqrt(kL) * 0.55, dt);
+  step(R, tR, kR, 2 * Math.sqrt(kR) * 0.55, dt);
+  const w = Math.max(40, R.x - L.x);
+  // stronger, more visible squash/stretch while the pill travels
+  const stretch = Math.min(0.28, Math.abs(w - chips[cur]
+    .offsetWidth) / 260);
+  const squash = 1 - stretch;
+  thumb.style.width = w + &#x27;px&#x27;;
+  thumb.style.transform =
+    `translateX(${L.x}px) scaleY(${squash})`;
+  clone.style.left = -L.x + &#x27;px&#x27;;
+  const busy = Math.abs(L.v) + Math.abs(R.v) &gt; 0.5 || Math
+    .abs(L.x - tL) &gt; 0.2 || Math.abs(R.x - tR) &gt; 0.2;
+  if (busy) requestAnimationFrame(frame);
+  else run = false;
+}
+
+function select(i) {
+  const dir = i &gt;= cur ? 1 : -1;
+  cur = i;
+  chips.forEach((c, n) =&gt; c.setAttribute(&#x27;aria-checked&#x27;,
+    n === i));
+  layout();
+  // wider spring spread = bigger, more legible jelly stretch
+  kL = dir &gt; 0 ? 260 : 780;
+  kR = dir &gt; 0 ? 780 : 260;
+  if (!run) {
+    run = true;
+    last = performance.now();
+    requestAnimationFrame(frame);
+  }
+}
+chips.forEach((c, i) =&gt; c.addEventListener(&#x27;click&#x27;, () =&gt;
+  select(i)));
+layout();
+L = edge(tL);
+R = edge(tR);
+thumb.style.width = (tR - tL) + &#x27;px&#x27;;
+thumb.style.transform = `translateX(${tL}px)`;
+select(0);
+</pre></div></div></div>
+<script>var sb=document.getElementById('sb');function fit(){sb.firstChild.style.transform='scale('+sb.clientWidth/660+')'}fit();addEventListener('resize',fit);var k='html';[].forEach.call(document.querySelectorAll('.tabs button'),function(b){b.onclick=function(){k=b.dataset.k;[].forEach.call(document.querySelectorAll('.tabs button'),function(x){x.classList.toggle('on',x===b)});['html','css','js'].forEach(function(n){document.getElementById('p-'+n).style.display=n===k?'block':'none'})}});
+document.getElementById('cp').onclick=function(e){navigator.clipboard.writeText(document.getElementById('p-'+k).textContent);e.target.textContent='Copied ✓';setTimeout(function(){e.target.textContent='Copy code'},1400)}</script></body></html>
